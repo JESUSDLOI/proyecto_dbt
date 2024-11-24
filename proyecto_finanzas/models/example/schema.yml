@@ -1,0 +1,9 @@
+
+version: 2
+
+sources:
+  - name: example
+    connection:
+      driver: mysql
+      host: localhost
+      port: 3306
