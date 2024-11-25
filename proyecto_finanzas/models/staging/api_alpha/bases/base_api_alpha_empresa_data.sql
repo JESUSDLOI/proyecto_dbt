@@ -23,8 +23,8 @@ renamed as (
     OVERVIEW__PE_RATIO::NUMERIC(10, 2) as ratio_precio_ganancia,                     --(OVERVIEW__MARKET_CAPITALIZATION / OVERVIEW__NET_INCOME_TTM),
     OVERVIEW__PEG_RATIO::NUMERIC(10, 2) as ratio_peg,                                -- Relación precio-ganancias ajustada al crecimiento.                          --(OVERVIEW__PE_RATIO / OVERVIEW__EPS),
     OVERVIEW__BOOK_VALUE::NUMERIC(20, 2) as valor_contable,                        
-    OVERVIEW__DIVIDEND_PER_SHARE::NUMERIC(10, 2) as dividendo_por_accion,             
-    OVERVIEW__DIVIDEND_YIELD::NUMERIC(5, 2) as rend_div_accion_porc,                    --(OVERVIEW__DIVIDEND_PER_SHARE / OVERVIEW__MARKET_CAPITALIZATION)
+    nullif(OVERVIEW__DIVIDEND_PER_SHARE, 'None')::NUMERIC(10, 2) as dividendo_por_accion,             
+    nullif(OVERVIEW__DIVIDEND_YIELD, 'None')::NUMERIC(5, 2) as rend_div_accion_porc,                    --(OVERVIEW__DIVIDEND_PER_SHARE / OVERVIEW__MARKET_CAPITALIZATION)
     OVERVIEW__EPS::NUMERIC(10, 2) as ganancia_por_accion,                               --(OVERVIEW__EPS),
     OVERVIEW__REVENUE_PER_SHARE_TTM::NUMERIC(20, 2) as ingresos_por_accion,            --(OVERVIEW__REVENUE_TTM / OVERVIEW__SHARES_OUTSTANDING) (Ingresos por acción),
     OVERVIEW__PROFIT_MARGIN::NUMERIC(5, 2) as margen_ganancia,                         --(OVERVIEW__NET_INCOME_TTM / OVERVIEW__REVENUE_TTM) (Margen de ganancia),
@@ -49,8 +49,8 @@ renamed as (
     OVERVIEW___50_DAY_MOVING_AVERAGE::NUMERIC(10, 2) as media_movil_50_dias,           --Media móvil de 50 días
     OVERVIEW___200_DAY_MOVING_AVERAGE::NUMERIC(10, 2) as media_movil_200_dias,          --Media móvil de 200 días
     OVERVIEW__SHARES_OUTSTANDING::NUMERIC(20, 0) as acciones_circulando,         --Número de acciones en circulación
-    OVERVIEW__DIVIDEND_DATE::DATE as fecha_divid,                                --Fecha en la que se paga el dividendo                 
-    OVERVIEW__EX_DIVIDEND_DATE::DATE as fecha_ex_divid,                          --Fecha en la que una acción se negocia sin el dividendo                
+    nullif(OVERVIEW__DIVIDEND_DATE, 'None')::DATE as fecha_divid,                                --Fecha en la que se paga el dividendo                 
+    nullif(OVERVIEW__EX_DIVIDEND_DATE, 'None')::DATE as fecha_ex_divid,                          --Fecha en la que una acción se negocia sin el dividendo                
     _DLT_LOAD_ID::VARCHAR(255) as id_carga,                                       --Id de la carga
     _DLT_ID::VARCHAR(255) as id,                                                  --Id del registro
 
