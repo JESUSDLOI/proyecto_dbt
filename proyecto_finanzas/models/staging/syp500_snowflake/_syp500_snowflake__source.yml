@@ -1,0 +1,77 @@
+version: 2
+sources:
+  - name: syp500_snowflake
+    schema: DATAFEEDS
+    database: S__P_500_BY_DOMAIN_AND_AGGREGATED_BY_TICKERS_SAMPLE
+    tables:
+      - name: SP_500
+        description: "Tabla fuente que contiene datos de métricas de visitas web de empresas."
+        columns:
+          - name: company_name
+            description: "Nombre de la empresa."
+            tests:
+              - not_null
+          - name: country
+            description: "País de origen del tráfico."
+            tests:
+              - not_null
+          - name: date
+            description: "Fecha correspondiente al punto de datos."
+            tests:
+              - not_null
+          - name: desktop_avg_visit_duration
+            description: "Duración promedio de visita en escritorio (en segundos)."
+            tests:
+              - not_null
+          - name: desktop_bounce_rate
+            description: "Tasa de rebote en escritorio."
+            tests:
+              - not_null
+          - name: desktop_pages_per_visit
+            description: "Páginas promedio por visita en escritorio."
+            tests:
+              - not_null
+          - name: desktop_visits
+            description: "Número estimado de visitas en escritorio."
+            tests:
+              - not_null
+          - name: domain
+            description: "Dominio correspondiente a las métricas."
+            tests:
+              - not_null
+          - name: mobile_avg_visit_duration
+            description: "Duración promedio de visita en móvil (en segundos)."
+            tests:
+              - not_null
+          - name: mobile_bounce_rate
+            description: "Tasa de rebote en móvil."
+            tests:
+              - not_null
+          - name: mobile_pages_per_visit
+            description: "Páginas promedio por visita en móvil."
+            tests:
+              - not_null
+          - name: mobile_visits
+            description: "Número estimado de visitas en móvil."
+            tests:
+              - not_null
+          - name: ticker
+            description: "Identificador ticker de la empresa."
+            tests:
+              - not_null
+          - name: total_avg_visit_duration
+            description: "Duración promedio de visita total (en segundos)."
+            tests:
+              - not_null
+          - name: total_bounce_rate
+            description: "Tasa de rebote total."
+            tests:
+              - not_null
+          - name: total_pages_per_visit
+            description: "Páginas promedio por visita total."
+            tests:
+              - not_null
+          - name: total_visits
+            description: "Número estimado de visitas totales."
+            tests:
+              - not_null
