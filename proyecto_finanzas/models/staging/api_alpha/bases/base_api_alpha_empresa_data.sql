@@ -17,7 +17,7 @@ WITH source AS (
     CAST(OVERVIEW__ADDRESS AS VARCHAR(255)) AS direccion,
     CAST(OVERVIEW__OFFICIAL_SITE AS VARCHAR(16777216)) AS sitio_web,
     CAST(OVERVIEW__FISCAL_YEAR_END AS VARCHAR(255)) AS fin_anyo_fiscal, /* Mes escrito */
-    CAST(OVERVIEW__LATEST_QUARTER AS DATE) AS ultimo_trimestre,
+    CAST(CONVERT_TIMEZONE('UTC', CAST(OVERVIEW__LATEST_QUARTER AS DATE))) AS ultimo_trimestre,
     CAST(OVERVIEW__MARKET_CAPITALIZATION AS DECIMAL(20, 2)) AS capitalizacion_mercado,
     CAST(OVERVIEW__EBITDA AS DECIMAL(20, 2)) AS ebitda, /* Ganancias antes de intereses, impuestos, depreciación y amortización. */
     CAST(OVERVIEW__PE_RATIO AS DECIMAL(10, 2)) AS ratio_precio_ganancia, /* (OVERVIEW__MARKET_CAPITALIZATION / OVERVIEW__NET_INCOME_TTM), */
@@ -49,8 +49,8 @@ WITH source AS (
     CAST(OVERVIEW___50_DAY_MOVING_AVERAGE AS DECIMAL(10, 2)) AS media_movil_50_dias, /* Media móvil de 50 días */
     CAST(OVERVIEW___200_DAY_MOVING_AVERAGE AS DECIMAL(10, 2)) AS media_movil_200_dias, /* Media móvil de 200 días */
     CAST(OVERVIEW__SHARES_OUTSTANDING AS DECIMAL(20, 0)) AS acciones_circulando, /* Número de acciones en circulación */
-    CAST(NULLIF(OVERVIEW__DIVIDEND_DATE, 'None') AS DATE) AS fecha_divid, /* Fecha en la que se paga el dividendo                 */
-    CAST(NULLIF(OVERVIEW__EX_DIVIDEND_DATE, 'None') AS DATE) AS fecha_ex_divid, /* Fecha en la que una acción se negocia sin el dividendo                */
+    CONVERT_TIMEZONE('UTC', CAST(NULLIF(OVERVIEW__DIVIDEND_DATE, 'None') AS DATE)) AS fecha_divid, /* Fecha en la que se paga el dividendo                 */
+    CONVERT_TIMEZONE('UTC', CAST(NULLIF(OVERVIEW__EX_DIVIDEND_DATE, 'None') AS DATE)) AS fecha_ex_divid, /* Fecha en la que una acción se negocia sin el dividendo                */
     CAST(_DLT_LOAD_ID AS VARCHAR(255)) AS id_carga, /* Id de la carga */
     CAST(_DLT_ID AS VARCHAR(255)) AS id /* Id del registro */
   FROM source

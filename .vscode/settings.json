@@ -7,5 +7,6 @@
     },
     "dbt.enableNewLineagePanel": true,
     "dbt.altimateAiKey": "67687caec59cc807c4463c60f4515d8a",
-    "dbt.altimateInstanceName": "finacial"
+    "dbt.altimateInstanceName": "finacial",
+    "dbt.lineage.showNonSelectEdges": false
 }
