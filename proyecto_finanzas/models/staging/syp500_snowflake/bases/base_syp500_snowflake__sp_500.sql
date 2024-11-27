@@ -6,7 +6,7 @@ WITH source AS (
   SELECT
     CAST(company_name AS VARCHAR(255)) AS nombre_empresa, /* Nombre de la empresa */
     CAST(country AS VARCHAR(255)) AS pais, /* País de origen del tráfico */
-    CAST(date AS DATE) AS fecha, /* Fecha correspondiente al dato */
+    CAST(CONVERT_TIMEZONE('UTC', date) AS DATE) AS fecha, /* Fecha correspondiente al dato en UTC */
     CAST(desktop_avg_visit_duration AS DECIMAL(10, 2)) AS dura_prom_visi_escri, /* Duración promedio de visita en escritorio (en segundos) */
     CAST(desktop_bounce_rate AS DECIMAL(5, 2)) AS tasa_rebote_escri, /* Tasa de rebote en escritorio */
     CAST(desktop_pages_per_visit AS DECIMAL(10, 2)) AS pag_visi_escri, /* Páginas por visita promedio en escritorio */
