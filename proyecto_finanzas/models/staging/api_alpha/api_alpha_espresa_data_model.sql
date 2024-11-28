@@ -4,7 +4,7 @@ WITH source AS (
     snowflake.cortex.translate(descripcion, 'en', 'es') AS traduccion,
     SNOWFLAKE.CORTEX.EXTRACT_ANSWER(
       descripcion,
-      'What are all the different businesses, services, \n    or products the company offers? with one word separated by commas'
+      'What are all the different businesses, services, or products the company offers? with one word separated by commas'
     )::string AS Respuesta_cortex
   /* Añade la función de cortex para traducir y extraer la respuesta */
   FROM {{ ref('base_api_alpha_empresa_data') }} AS empresa_data
@@ -16,7 +16,7 @@ WITH source AS (
     nombre_empresa,
     descripcion,
     traduccion,
-    REGEXP_SUBSTR(Respuesta_cortex, '\\\\\\"[^\\"]+\\\\\\"', 1, 2) AS respuesta_extraida, /* Extrae la respuesta de cortex traducida*/
+    REGEXP_SUBSTR(Respuesta_cortex, '\\\"[^\"]+\\\"', 1, 2) AS respuesta_extraida, /* Extrae la respuesta de cortex traducida*/
     idx_CIK,
     bolsa,
     moneda,
