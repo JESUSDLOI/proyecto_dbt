@@ -53,8 +53,8 @@ WITH source AS (
     CAST(OVERVIEW__SHARES_OUTSTANDING AS DECIMAL(20, 0)) AS acciones_circulando, /* Número de acciones en circulación */
     CONVERT_TIMEZONE('UTC', CAST(NULLIF(OVERVIEW__DIVIDEND_DATE, 'None') AS DATE)) AS fecha_divid, /* Fecha en la que se paga el dividendo                 */
     CONVERT_TIMEZONE('UTC', CAST(NULLIF(OVERVIEW__EX_DIVIDEND_DATE, 'None') AS DATE)) AS fecha_ex_divid, /* Fecha en la que una acción se negocia sin el dividendo                */
-    CAST(_DLT_LOAD_ID AS VARCHAR(255)) AS id_carga, /* Id de la carga */
-    CAST(_DLT_ID AS VARCHAR(255)) AS id /* Id del registro */
+    CAST(_DLT_LOAD_ID AS VARCHAR(255)) AS id_carga_dlt, /* Id de la carga */
+    CAST(_DLT_ID AS VARCHAR(255)) AS id_dlt /* Id del registro */
   FROM source
 )
 SELECT

@@ -42,10 +42,10 @@ WITH source AS (
     CAST(NULLIF(RETAINED_EARNINGS, 'None') AS DECIMAL(20, 2)) AS ganancias_retenidas, /* Ganancias retenidas */
     CAST(NULLIF(COMMON_STOCK, 'None') AS DECIMAL(20, 2)) AS acciones_comunes, /* Acciones comunes */
     CAST(NULLIF(COMMON_STOCK_SHARES_OUTSTANDING, 'None') AS DECIMAL(20, 2)) AS acciones_comunes_en_circulacion, /* Acciones comunes en circulación */
-    CAST(_DLT_ROOT_ID AS VARCHAR(255)) AS id_raiz, /* ID raíz */
-    CAST(_DLT_PARENT_ID AS VARCHAR(255)) AS id_padre, /* ID padre */
-    CAST(NULLIF(_DLT_LIST_IDX, 'None') AS DECIMAL(20, 2)) AS indice_lista, /* Índice de lista */
-    CAST(_DLT_ID AS VARCHAR(255)) AS id /* ID_dato dlt*/
+    CAST(_DLT_ROOT_ID AS VARCHAR(255)) AS id_raiz_dlt, /* ID raíz */
+    CAST(_DLT_PARENT_ID AS VARCHAR(255)) AS id_padre_dlt, /* ID padre */
+    CAST(NULLIF(_DLT_LIST_IDX, 'None') AS DECIMAL(20, 2)) AS indice_lista_dlt, /* Índice de lista */
+    CAST(_DLT_ID AS VARCHAR(255)) AS id_dlt /* ID_dato dlt*/
   FROM source
 )
 SELECT
