@@ -4,7 +4,9 @@ WITH source AS (
   FROM {{ source('api_alpha', 'empresa_data') }} AS empresa_data
 ), renamed AS (
   SELECT
+    
     CAST(OVERVIEW__SYMBOL AS VARCHAR(255)) AS simbolo,
+    {{ dbt_utils.generate_surrogate_key(['simbolo']) }} AS id_ticker, /* Clave única para identificar los datos de la empresa */
     CAST(OVERVIEW__ASSET_TYPE AS VARCHAR(255)) AS tipo_activo, /* Tipo de activo (Equity, ETF, etc.) */
     CAST(OVERVIEW__NAME AS VARCHAR(255)) AS nombre_empresa,
     CAST(OVERVIEW__DESCRIPTION AS VARCHAR(16777216)) AS descripcion,
@@ -17,11 +19,11 @@ WITH source AS (
     CAST(OVERVIEW__ADDRESS AS VARCHAR(255)) AS direccion,
     CAST(OVERVIEW__OFFICIAL_SITE AS VARCHAR(16777216)) AS sitio_web,
     CAST(OVERVIEW__FISCAL_YEAR_END AS VARCHAR(255)) AS fin_anyo_fiscal, /* Mes escrito */
-    CAST(CONVERT_TIMEZONE('UTC', CAST(OVERVIEW__LATEST_QUARTER AS DATE))) AS ultimo_trimestre,
+    CONVERT_TIMEZONE('UTC', CAST(OVERVIEW__LATEST_QUARTER AS DATE)) AS ultimo_trimestre,
     CAST(OVERVIEW__MARKET_CAPITALIZATION AS DECIMAL(20, 2)) AS capitalizacion_mercado,
     CAST(OVERVIEW__EBITDA AS DECIMAL(20, 2)) AS ebitda, /* Ganancias antes de intereses, impuestos, depreciación y amortización. */
     CAST(OVERVIEW__PE_RATIO AS DECIMAL(10, 2)) AS ratio_precio_ganancia, /* (OVERVIEW__MARKET_CAPITALIZATION / OVERVIEW__NET_INCOME_TTM), */
-    CAST(OVERVIEW__PEG_RATIO AS DECIMAL(10, 2)) AS ratio_peg, /* Relación precio-ganancias ajustada al crecimiento.                          --(OVERVIEW__PE_RATIO / OVERVIEW__EPS), */
+    CAST(OVERVIEW__PEG_RATIO AS DECIMAL(10, 2)) AS ratio_peg, /* Relación precio-ganancias ajustada al crecimiento.(OVERVIEW__PE_RATIO / OVERVIEW__EPS), */
     CAST(OVERVIEW__BOOK_VALUE AS DECIMAL(20, 2)) AS valor_contable,
     CAST(NULLIF(OVERVIEW__DIVIDEND_PER_SHARE, 'None') AS DECIMAL(10, 2)) AS dividendo_por_accion,
     CAST(NULLIF(OVERVIEW__DIVIDEND_YIELD, 'None') AS DECIMAL(5, 2)) AS rend_div_accion_porc, /* (OVERVIEW__DIVIDEND_PER_SHARE / OVERVIEW__MARKET_CAPITALIZATION) */

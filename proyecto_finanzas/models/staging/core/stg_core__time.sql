@@ -123,7 +123,7 @@ all_periods as (
     dateadd(
         day,
         (row_number() over (order by 1) - 1),
-        cast('2020-01-01' as timestamp)
+        cast('2000-01-01' as timestamp)
         )
 
 
@@ -136,7 +136,7 @@ filtered as (
 
     select *
     from all_periods
-    where date_day <= cast('2030-12-31' as timestamp)
+    where date_day <= cast('2025-12-31' as timestamp)
 
 )
 

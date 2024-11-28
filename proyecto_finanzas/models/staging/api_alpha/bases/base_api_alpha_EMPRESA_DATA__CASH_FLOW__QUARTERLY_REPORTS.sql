@@ -38,6 +38,7 @@ SELECT
     CAST(_DLT_LIST_IDX AS INTEGER) AS indice_lista_dlt, /* Índice de lista DLT */
     CAST(_DLT_ID AS VARCHAR(255)) AS id_dlt /* Identificador DLT */
   FROM source
+)
 SELECT
   *
 FROM renamed

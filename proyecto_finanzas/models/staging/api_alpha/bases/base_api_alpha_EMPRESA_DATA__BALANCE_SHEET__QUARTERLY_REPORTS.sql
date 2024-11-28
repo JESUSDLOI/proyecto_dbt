@@ -9,7 +9,7 @@ WITH source AS (
     CAST(NULLIF(TOTAL_ASSETS, 'None') AS DECIMAL(20, 2)) AS total_activos, /* Total de activos */
     CAST(NULLIF(TOTAL_CURRENT_ASSETS, 'None') AS DECIMAL(20, 2)) AS activos_corrientes, /* Activos corrientes */
     CAST(NULLIF(CASH_AND_CASH_EQUIVALENTS_AT_CARRYING_VALUE, 'None') AS DECIMAL(20, 2)) AS efectivo_equivalente, /* Efectivo y equivalentes de efectivo */
-    CAST(NULLIF(CASH_AND_SHORT_TERM_INVESTMENTS, 'None') AS DECIMAL(20, 2)) AS inversiones_corto_plazo, /* Inversiones a corto plazo */
+    CAST(NULLIF(CASH_AND_SHORT_TERM_INVESTMENTS, 'None') AS DECIMAL(20, 2)) AS efectivo_inversiones_corto_plazo, /* Inversiones a corto plazo */
     CAST(NULLIF(INVENTORY, 'None') AS DECIMAL(20, 2)) AS inventario, /* Inventario */
     CAST(NULLIF(CURRENT_NET_RECEIVABLES, 'None') AS DECIMAL(20, 2)) AS cuentas_por_cobrar, /* Cuentas por cobrar netas */
     CAST(NULLIF(TOTAL_NON_CURRENT_ASSETS, 'None') AS DECIMAL(20, 2)) AS activos_no_corrientes, /* Activos no corrientes */
