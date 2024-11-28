@@ -7,7 +7,7 @@ WITH source AS (
       'What are all the different businesses, services, or products the company offers? with one word separated by commas'
     )::string AS Respuesta_cortex
   /* Añade la función de cortex para traducir y extraer la respuesta */
-  FROM {{ ref('base_api_alpha_empresa_data') }} AS empresa_data
+  FROM {{ ref('base_api_alpha__empresa_data') }} AS empresa_data
 ), renamed AS (
   SELECT
     simbolo,
@@ -25,8 +25,8 @@ WITH source AS (
     industria,
     direccion,
     sitio_web,
-    id_carga,
-    id
+    id_carga_dlt,
+    id_dlt
   FROM source
 )
 SELECT
@@ -46,11 +46,12 @@ SELECT
   idx_CIK,
   bolsa,
   moneda,
+  id_
   pais,
   sector,
   industria,
   direccion,
   sitio_web,
-  id_carga,
-  id
+  id_carga_dlt,
+  id_dlt
 FROM renamed

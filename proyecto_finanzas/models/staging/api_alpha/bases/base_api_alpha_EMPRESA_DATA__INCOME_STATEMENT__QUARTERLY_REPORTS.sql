@@ -4,36 +4,36 @@ WITH source AS (
   FROM {{ source('api_alpha', 'EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS') }} AS EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS
 ), renamed AS (
 SELECT
-    CAST(CONVERT_TIMEZONE('UTC', FISCAL_DATE_ENDING) AS DATE) AS FECHA_FISCAL_FINAL, /* Fecha en la que finaliza el período fiscal, convertida a la zona horaria UTC y luego a formato de fecha */
-    CAST(REPORTED_CURRENCY AS VARCHAR(255)) AS MONEDA_REPORTADA, /* Moneda en la que se reportan los datos financieros */
-    CAST(NULLIF(GROSS_PROFIT, 'None') AS NUMERIC(20, 2)) AS UTILIDAD_BRUTA, /* Beneficio bruto obtenido antes de deducir los gastos operativos */
-    CAST(NULLIF(TOTAL_REVENUE, 'None') AS NUMERIC(20, 2)) AS INGRESOS_TOTALES, /* Ingresos totales generados por la empresa */
-    CAST(NULLIF(COST_OF_REVENUE, 'None') AS NUMERIC(20, 2)) AS COSTO_DE_INGRESOS, /* Costos asociados directamente con la generación de ingresos */
-    CAST(NULLIF(COSTOF_GOODS_AND_SERVICES_SOLD, 'None') AS NUMERIC(20, 2)) AS COSTO_DE_BIENES_Y_SERVICIOS_VENDIDOS, /* Costos de los bienes y servicios vendidos */
-    CAST(NULLIF(OPERATING_INCOME, 'None') AS NUMERIC(20, 2)) AS INGRESO_OPERATIVO, /* Ingreso generado por las operaciones principales de la empresa */
-    CAST(NULLIF(SELLING_GENERAL_AND_ADMINISTRATIVE, 'None') AS NUMERIC(20, 2)) AS GASTOS_GENERALES_Y_ADMINISTRATIVOS, /* Gastos relacionados con la venta, administración y otros gastos generales */
-    CAST(NULLIF(RESEARCH_AND_DEVELOPMENT, 'None') AS NUMERIC(20, 2)) AS INVESTIGACION_Y_DESARROLLO, /* Gastos en investigación y desarrollo */
-    CAST(NULLIF(OPERATING_EXPENSES, 'None') AS NUMERIC(20, 2)) AS GASTOS_OPERATIVOS, /* Gastos totales incurridos en las operaciones de la empresa */
-    CAST(NULLIF(INVESTMENT_INCOME_NET, 'None') AS NUMERIC(20, 2)) AS INGRESOS_POR_INVERSION_NETOS, /* Ingresos netos obtenidos de inversiones */
-    CAST(NULLIF(NET_INTEREST_INCOME, 'None') AS NUMERIC(20, 2)) AS INGRESOS_NETOS_POR_INTERESES, /* Ingresos netos obtenidos por intereses */
-    CAST(NULLIF(INTEREST_INCOME, 'None') AS NUMERIC(20, 2)) AS INGRESOS_POR_INTERESES, /* Ingresos obtenidos por intereses */
-    CAST(NULLIF(INTEREST_EXPENSE, 'None') AS NUMERIC(20, 2)) AS GASTOS_POR_INTERESES, /* Gastos incurridos por intereses */
-    CAST(NULLIF(NON_INTEREST_INCOME, 'None') AS NUMERIC(20, 2)) AS INGRESOS_NO_INTERESES, /* Ingresos obtenidos que no están relacionados con intereses */
-    CAST(NULLIF(OTHER_NON_OPERATING_INCOME, 'None') AS NUMERIC(20, 2)) AS OTROS_INGRESOS_NO_OPERATIVOS, /* Otros ingresos obtenidos que no están relacionados con las operaciones principales */
-    CAST(NULLIF(DEPRECIATION, 'None') AS NUMERIC(20, 2)) AS DEPRECIACION, /* Gastos de depreciación de activos */
-    CAST(NULLIF(DEPRECIATION_AND_AMORTIZATION, 'None') AS NUMERIC(20, 2)) AS DEPRECIACION_Y_AMORTIZACION, /* Gastos combinados de depreciación y amortización */
-    CAST(NULLIF(INCOME_BEFORE_TAX, 'None') AS NUMERIC(20, 2)) AS INGRESO_ANTES_DE_IMPUESTOS, /* Ingreso obtenido antes de deducir los impuestos */
-    CAST(NULLIF(INCOME_TAX_EXPENSE, 'None') AS NUMERIC(20, 2)) AS GASTOS_POR_IMPUESTOS, /* Gastos incurridos por impuestos */
-    CAST(NULLIF(INTEREST_AND_DEBT_EXPENSE, 'None') AS NUMERIC(20, 2)) AS GASTOS_POR_INTERESES_Y_DEUDAS, /* Gastos combinados por intereses y deudas */
-    CAST(NULLIF(NET_INCOME_FROM_CONTINUING_OPERATIONS, 'None') AS NUMERIC(20, 2)) AS INGRESO_NETO_DE_OPERACIONES_CONTINUAS, /* Ingreso neto obtenido de operaciones continuas */
-    CAST(NULLIF(COMPREHENSIVE_INCOME_NET_OF_TAX, 'None') AS NUMERIC(20, 2)) AS INGRESO_INTEGRAL_NETO_DE_IMPUESTOS, /* Ingreso integral neto después de impuestos */
-    CAST(NULLIF(EBIT, 'None') AS NUMERIC(20, 2)) AS EBIT, /* Beneficio antes de intereses e impuestos */
-    CAST(NULLIF(EBITDA, 'None') AS NUMERIC(20, 2)) AS EBITDA, /* Beneficio antes de intereses, impuestos, depreciación y amortización */
-    CAST(NULLIF(NET_INCOME, 'None') AS NUMERIC(20, 2)) AS INGRESO_NETO, /* Ingreso neto total */
-    CAST(_DLT_ROOT_ID AS VARCHAR(255)) AS _DLT_ID_RAIZ, /* Identificador raíz en el sistema DLT */
-    CAST(_DLT_PARENT_ID AS VARCHAR(255)) AS _DLT_ID_PADRE, /* Identificador del padre en el sistema DLT */
-    CAST(_DLT_LIST_IDX AS INT) AS _DLT_INDICE_LISTA, /* Índice de lista en el sistema DLT */
-    CAST(_DLT_ID AS VARCHAR(255)) AS _DLT_ID /* Identificador único en el sistema DLT */
+    CAST(TRIM(CONVERT_TIMEZONE('UTC', fiscal_date_ending)) AS DATE) AS fecha_fiscal_final, /* Fecha en la que finaliza el período fiscal, convertida a la zona horaria UTC y luego a formato de fecha */
+    CAST(TRIM(reported_currency) AS VARCHAR(255)) AS moneda, /* Moneda en la que se reportan los datos financieros */
+    CAST(NULLIF(TRIM(gross_profit), 'None') AS NUMERIC(20, 2)) AS utilidad_bruta, /* Beneficio bruto obtenido antes de deducir los gastos operativos */
+    CAST(NULLIF(TRIM(total_revenue), 'None') AS NUMERIC(20, 2)) AS ingresos_totales, /* Ingresos totales generados por la empresa */
+    CAST(NULLIF(TRIM(cost_of_revenue), 'None') AS NUMERIC(20, 2)) AS costo_de_ingresos, /* Costos asociados directamente con la generación de ingresos */
+    CAST(NULLIF(TRIM(costof_goods_and_services_sold), 'None') AS NUMERIC(20, 2)) AS costo_de_bienes_y_servicios_vendidos, /* Costos de los bienes y servicios vendidos */
+    CAST(NULLIF(TRIM(operating_income), 'None') AS NUMERIC(20, 2)) AS ingreso_operativo, /* Ingreso generado por las operaciones principales de la empresa */
+    CAST(NULLIF(TRIM(selling_general_and_administrative), 'None') AS NUMERIC(20, 2)) AS gastos_generales_y_administrativos, /* Gastos relacionados con la venta, administración y otros gastos generales */
+    CAST(NULLIF(TRIM(research_and_development), 'None') AS NUMERIC(20, 2)) AS investigacion_y_desarrollo, /* Gastos en investigación y desarrollo */
+    CAST(NULLIF(TRIM(operating_expenses), 'None') AS NUMERIC(20, 2)) AS gastos_operativos, /* Gastos totales incurridos en las operaciones de la empresa */
+    CAST(NULLIF(TRIM(investment_income_net), 'None') AS NUMERIC(20, 2)) AS ingresos_por_inversion_netos, /* Ingresos netos obtenidos de inversiones */
+    CAST(NULLIF(TRIM(net_interest_income), 'None') AS NUMERIC(20, 2)) AS ingresos_netos_por_intereses, /* Ingresos netos obtenidos por intereses */
+    CAST(NULLIF(TRIM(interest_income), 'None') AS NUMERIC(20, 2)) AS ingresos_por_intereses, /* Ingresos obtenidos por intereses */
+    CAST(NULLIF(TRIM(interest_expense), 'None') AS NUMERIC(20, 2)) AS gastos_por_intereses, /* Gastos incurridos por intereses */
+    CAST(NULLIF(TRIM(non_interest_income), 'None') AS NUMERIC(20, 2)) AS ingresos_no_intereses, /* Ingresos obtenidos que no están relacionados con intereses */
+    CAST(NULLIF(TRIM(other_non_operating_income), 'None') AS NUMERIC(20, 2)) AS otros_ingresos_no_operativos, /* Otros ingresos obtenidos que no están relacionados con las operaciones principales */
+    CAST(NULLIF(TRIM(depreciation), 'None') AS NUMERIC(20, 2)) AS depreciacion, /* Gastos de depreciación de activos */
+    CAST(NULLIF(TRIM(depreciation_and_amortization), 'None') AS NUMERIC(20, 2)) AS depreciacion_y_amortizacion, /* Gastos combinados de depreciación y amortización */
+    CAST(NULLIF(TRIM(income_before_tax), 'None') AS NUMERIC(20, 2)) AS ingreso_antes_de_impuestos, /* Ingreso obtenido antes de deducir los impuestos */
+    CAST(NULLIF(TRIM(income_tax_expense), 'None') AS NUMERIC(20, 2)) AS gastos_por_impuestos, /* Gastos incurridos por impuestos */
+    CAST(NULLIF(TRIM(interest_and_debt_expense), 'None') AS NUMERIC(20, 2)) AS gastos_por_intereses_y_deudas, /* Gastos combinados por intereses y deudas */
+    CAST(NULLIF(TRIM(net_income_from_continuing_operations), 'None') AS NUMERIC(20, 2)) AS ingreso_neto_de_operaciones_continuas, /* Ingreso neto obtenido de operaciones continuas */
+    CAST(NULLIF(TRIM(comprehensive_income_net_of_tax), 'None') AS NUMERIC(20, 2)) AS ingreso_integral_neto_de_impuestos, /* Ingreso integral neto después de impuestos */
+    CAST(NULLIF(TRIM(ebit), 'None') AS NUMERIC(20, 2)) AS ebit, /* Beneficio antes de intereses e impuestos */
+    CAST(NULLIF(TRIM(ebitda), 'None') AS NUMERIC(20, 2)) AS ebitda, /* Beneficio antes de intereses, impuestos, depreciación y amortización */
+    CAST(NULLIF(TRIM(net_income), 'None') AS NUMERIC(20, 2)) AS ingreso_neto, /* Ingreso neto total */
+    CAST(TRIM(_dlt_root_id) AS VARCHAR(255)) AS id_raiz_dlt, /* Identificador raíz en el sistema DLT */
+    CAST(TRIM(_dlt_parent_id) AS VARCHAR(255)) AS id_padre_dlt, /* Identificador del padre en el sistema DLT */
+    CAST(TRIM(_dlt_list_idx) AS INT) AS indice_lista_dlt, /* Índice de lista en el sistema DLT */
+    CAST(TRIM(_dlt_id) AS VARCHAR(255)) AS id_dlt /* Identificador único en el sistema DLT */
 
   FROM source
 )

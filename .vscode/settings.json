@@ -9,5 +9,7 @@
     "dbt.altimateAiKey": "67687caec59cc807c4463c60f4515d8a",
     "dbt.altimateInstanceName": "finacial",
     "dbt.lineage.showNonSelectEdges": false,
-    "dbt.perspectiveTheme": "Vintage"
+    "dbt.perspectiveTheme": "Vintage",
+    "dbt.lineage.defaultExpansion": 1,
+    "dbt.lineage.showSelectEdges": true
 }
