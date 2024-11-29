@@ -1,8 +1,7 @@
 WITH source AS (
   SELECT
+    id_simbolo,
     a.fecha_fiscal_final,
-    {{ dbt_utils.generate_surrogate_key(['a.moneda']) }} as id_moneda,
-    a.moneda,
     utilidad_bruta,
     ingresos_totales,
     costo_de_ingresos,
@@ -98,6 +97,9 @@ WITH source AS (
       on a.id_raiz_dlt = b.id_raiz_dlt
   inner join {{ ref('base_api_alpha_EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS') }} as c
       on a.id_raiz_dlt = c.id_raiz_dlt
+  inner join {{ ref('stg_api_alpha__dimensiones_empresa') }} as d
+      on a.id_raiz_dlt = d.id_raiz_dlt
+
 )
 
 

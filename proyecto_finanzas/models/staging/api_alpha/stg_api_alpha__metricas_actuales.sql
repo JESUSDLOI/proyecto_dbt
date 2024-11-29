@@ -5,7 +5,14 @@ WITH source AS (
 ),
 renamed AS (
 SELECT
-  id_ticker,
+  id_simbolo,
+  id_activo,
+  id_bolsa,
+  id_industria,
+  id_sector,
+  idx_CIK, /*id de la informacion de la empresa*/
+  id_web,
+  id_moneda,
   fin_anyo_fiscal,
   ultimo_trimestre,
   capitalizacion_mercado,
@@ -41,7 +48,7 @@ SELECT
   fecha_divid,
   fecha_ex_divid,
   id_carga_dlt,
-  id_dlt
+  id_raiz_dlt
 
 FROM source
 
