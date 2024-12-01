@@ -7,6 +7,7 @@ WITH source AS (
     id_simbolo_hist,
     id_pais_hist,
     id_web_hist,
+    fecha,
     dura_prom_visi_escri,
     tasa_rebote_escri,
     pag_visi_escri,
