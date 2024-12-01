@@ -1,10 +1,5 @@
 WITH source AS (
   SELECT
-    *
-  FROM {{ source('api_alpha', 'empresa_data') }} AS empresa_data
-), renamed AS (
-  SELECT
-    
     CAST(TRIM(OVERVIEW__SYMBOL) AS VARCHAR(255)) AS simbolo,
     {{ dbt_utils.generate_surrogate_key(['simbolo']) }} AS id_simbolo, /* Clave única para identificar los datos de la empresa */
     CAST(TRIM(OVERVIEW__ASSET_TYPE) AS VARCHAR(255)) AS tipo_activo, /* Tipo de activo (Equity, ETF, etc.) */
@@ -54,16 +49,19 @@ WITH source AS (
     CONVERT_TIMEZONE('UTC', CAST(NULLIF(TRIM(OVERVIEW__DIVIDEND_DATE), 'None') AS DATE)) AS fecha_divid, /* Fecha en la que se paga el dividendo */
     CONVERT_TIMEZONE('UTC', CAST(NULLIF(TRIM(OVERVIEW__EX_DIVIDEND_DATE), 'None') AS DATE)) AS fecha_ex_divid, /* Fecha en la que una acción se negocia sin el dividendo */
     CAST(TRIM(_DLT_LOAD_ID) AS VARCHAR(255)) AS id_carga_dlt, /* Id de la carga */
-    CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_raiz_dlt,/* Id del registro */
+    CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_raiz_dlt, /* Id del registro */
     {{ dbt_utils.generate_surrogate_key(['moneda']) }} AS id_moneda, /* Clave única para identificar los datos de la moneda */
     {{ dbt_utils.generate_surrogate_key(['pais']) }} AS id_pais, /* Clave única para identificar los datos del país */
     {{ dbt_utils.generate_surrogate_key(['bolsa']) }} AS id_bolsa, /* Clave única para identificar los datos de la bolsa */
     {{ dbt_utils.generate_surrogate_key(['sector']) }} AS id_sector, /* Clave única para identificar los datos del sector */
     {{ dbt_utils.generate_surrogate_key(['industria']) }} AS id_industria, /* Clave única para identificar los datos de la industria */
     {{ dbt_utils.generate_surrogate_key(['tipo_activo']) }} AS id_activo, /* Clave única para identificar los datos de la empresa */
-    {{ dbt_utils.generate_surrogate_key(['sitio_web']) }} AS id_web /* Clave única para identificar los datos del sitio web */
-  FROM source
+    {{ dbt_utils.generate_surrogate_key(['sitio_web']) }} AS id_web, /* Clave única para identificar los datos del sitio web */
+
+  FROM {{ source('api_alpha', 'empresa_data') }} AS a 
+
 )
+  
 SELECT
   *
-FROM renamed
+FROM source

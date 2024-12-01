@@ -4,7 +4,7 @@ WITH source AS (
   FROM {{ source('api_alpha', 'EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS') }} AS EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS
 ), renamed AS (
   SELECT
-    CAST(CONVERT_TIMEZONE('UTC', TRIM(FISCAL_DATE_ENDING)) AS DATE) AS fecha_fiscal_final, /* Fecha de finalización del período fiscal */
+    CAST(TRIM(FISCAL_DATE_ENDING) AS DATE) AS fecha_fiscal_final, /* Fecha de finalización del período fiscal */
     CAST(TRIM(REPORTED_CURRENCY) AS VARCHAR(255)) AS moneda, /* Moneda reportada */
     CAST(NULLIF(TRIM(TOTAL_ASSETS), 'None') AS numeric(20, 2)) AS total_activos, /* Total de activos */
     CAST(NULLIF(TRIM(TOTAL_CURRENT_ASSETS), 'None') AS numeric(20, 2)) AS activos_corrientes, /* Activos corrientes */

@@ -24,7 +24,7 @@ WITH source AS (
     ingreso_neto_de_operaciones_continuas,
     ingreso_integral_neto_de_impuestos,
     ebit,
-    ebitda,
+    c.ebitda,
     b.ingreso_neto,
     a.id_raiz_dlt,
     a.id_padre_dlt,
@@ -94,11 +94,12 @@ WITH source AS (
     acciones_comunes_en_circulacion
   FROM {{ ref('base_api_alpha_EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS') }} AS a
   inner join {{ ref('base_api_alpha_EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS') }} as b
-      on a.id_raiz_dlt = b.id_raiz_dlt
+      on a.id_raiz_dlt = b.id_raiz_dlt and a.fecha_fiscal_final = b.fecha_fiscal_final
   inner join {{ ref('base_api_alpha_EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS') }} as c
-      on a.id_raiz_dlt = c.id_raiz_dlt
-  inner join {{ ref('stg_api_alpha__dimensiones_empresa') }} as d
+      on a.id_raiz_dlt = c.id_raiz_dlt and a.fecha_fiscal_final = c.fecha_fiscal_final
+  inner join {{ ref('stg_api_alpha__empresa_data') }} as d
       on a.id_raiz_dlt = d.id_raiz_dlt
+
 
 )
 

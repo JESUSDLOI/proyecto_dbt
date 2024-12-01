@@ -4,7 +4,7 @@ WITH source AS (
   FROM {{ source('api_alpha', 'EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS') }} AS EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS
 ), renamed AS (
 SELECT
-    CAST(TRIM(CONVERT_TIMEZONE('UTC', FISCAL_DATE_ENDING)) AS DATE) AS fecha_fiscal_final, /* Fecha de finalización del período fiscal en formato de fecha */
+     CAST(TRIM(FISCAL_DATE_ENDING) AS DATE) AS fecha_fiscal_final, /* Fecha de finalización del período fiscal en formato de fecha */
     CAST(TRIM(REPORTED_CURRENCY) AS VARCHAR(255)) AS moneda, /* Moneda en la que se reportan los datos financieros */
     CAST(NULLIF(TRIM(OPERATING_CASHFLOW), 'None') AS NUMERIC(20, 2)) AS flujo_efectivo_operativo, /* Flujo de efectivo generado por las actividades operativas */
     CAST(NULLIF(TRIM(PAYMENTS_FOR_OPERATING_ACTIVITIES), 'None') AS NUMERIC(20, 2)) AS pagos_actividades_operativas, /* Pagos realizados por actividades operativas */

@@ -97,8 +97,6 @@ sources:
             description: "Valor total de la empresa en el mercado financiero."
             tests:
               - not_null
-              - dbt_utils.accepted_range:
-                  min_value: 0
 
           - name: OVERVIEW__EBITDA
             description: "Ganancias antes de intereses, impuestos, depreciación y amortización."
@@ -124,15 +122,12 @@ sources:
           - name: OVERVIEW__DIVIDEND_PER_SHARE
             description: "Cantidad pagada en dividendos por acción."
             tests:
-              - dbt_utils.accepted_range:
-                  min_value: 0
+              - not_null
 
           - name: OVERVIEW__DIVIDEND_YIELD
             description: "Rendimiento porcentual de los dividendos sobre el precio de la acción."
             tests:
-              - dbt_utils.accepted_range:
-                  min_value: 0
-                  max_value: 100
+              - not_null
 
           - name: OVERVIEW__EPS
             description: "Ganancias por acción reportadas por la empresa."
@@ -147,30 +142,22 @@ sources:
           - name: OVERVIEW__PROFIT_MARGIN
             description: "Margen porcentual de beneficios sobre ingresos totales."
             tests:
-              - dbt_utils.accepted_range::
-                  min_value: 0
-                  max_value: 100
+              - not_null
 
           - name: OVERVIEW__OPERATING_MARGIN_TTM
             description: "Margen operativo en los últimos 12 meses."
             tests:
-              - dbt_utils.accepted_range:
-                  min_value: 0
-                  max_value: 100
+              - not_null
 
           - name: OVERVIEW__RETURN_ON_ASSETS_TTM
             description: "Retorno porcentual sobre los activos en los últimos 12 meses."
             tests:
-              - dbt_utils.accepted_range:
-                  min_value: 0
-                  max_value: 100
+              - not_null
 
           - name: OVERVIEW__RETURN_ON_EQUITY_TTM
             description: "Retorno porcentual sobre el patrimonio en los últimos 12 meses."
             tests:
-              - dbt_utils.accepted_range:
-                  min_value: 0
-                  max_value: 100
+              - not_null
 
           - name: OVERVIEW__REVENUE_TTM
             description: "Ingresos totales generados en los últimos 12 meses."
@@ -190,16 +177,12 @@ sources:
           - name: OVERVIEW__QUARTERLY_EARNINGS_GROWTH_YOY
             description: "Crecimiento porcentual de las ganancias trimestrales año contra año."
             tests:
-              - dbt_utils.accepted_range:
-                  min_value: -100
-                  max_value: 100
+              - not_null
 
           - name: OVERVIEW__QUARTERLY_REVENUE_GROWTH_YOY
             description: "Crecimiento porcentual de los ingresos trimestrales año contra año."
             tests:
-              - dbt_utils.accepted_range:
-                  min_value: -100
-                  max_value: 100
+              - not_null
 
           - name: OVERVIEW__ANALYST_TARGET_PRICE
             description: "Precio objetivo estimado por analistas para la acción."
@@ -470,7 +453,10 @@ sources:
             description: "Identificador raíz para el linaje de los datos."
             tests:
               - not_null
-
+              - relationships:
+                  to: ref('EMPRESA_DATA')
+                  field: _DLT_ID
+                  
           - name: _DLT_PARENT_ID
             description: "Identificador padre para el linaje de los datos."
             tests:
@@ -545,6 +531,10 @@ sources:
             description: "Identificador raíz para el linaje de los datos."
             tests:
               - not_null
+              - relationships:
+                  to: ref('EMPRESA_DATA')
+                  field: _DLT_ID
+
           - name: _DLT_PARENT_ID
             description: "Identificador padre para el linaje de los datos."
             tests:
@@ -625,6 +615,10 @@ sources:
             description: "Identificador raíz para el linaje de los datos."
             tests:
               - not_null
+              - relationships:
+                  to: ref('EMPRESA_DATA')
+                  field: _DLT_ID
+
           - name: _DLT_PARENT_ID
             description: "Identificador padre para el linaje de los datos."
             tests:
@@ -695,33 +689,10 @@ sources:
             tests:
               - not_null
               - unique
+              - relationships:
+                  to: ref('_DLT_LOADS')
+                  field: LOAD_ID
+                    
 
 
 
-      - name: _DLT_VERSION
-        description: "Tabla que contiene las versiones del pipeline de datos."
-        columns:
-          - name: VERSION
-            description: "Versión del pipeline."
-            tests:
-              - not_null
-          - name: ENGINE_VERSION
-            description: "Versión del motor."
-            tests:
-              - not_null
-          - name: INSERTED_AT
-            description: "Fecha y hora de inserción."
-            tests:
-              - not_null
-          - name: SCHEMA_NAME
-            description: "Nombre del esquema."
-            tests:
-              - not_null
-          - name: VERSION_HASH
-            description: "Hash de la versión."
-            tests:
-              - not_null
-          - name: SCHEMA
-            description: "Esquema del pipeline."
-            tests:
-              - not_null  

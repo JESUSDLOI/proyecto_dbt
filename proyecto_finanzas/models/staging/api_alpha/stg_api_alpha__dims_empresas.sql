@@ -1,3 +1,5 @@
+
+
 WITH source AS (
   SELECT
     *,
@@ -7,14 +9,16 @@ WITH source AS (
       'What are all the different businesses, services, or products the company offers? with one word separated by commas'
     )::string AS Respuesta_cortex
   /* Añade la función de cortex para traducir y extraer la respuesta */
-  FROM {{ ref('base_api_alpha__empresa_data') }} AS empresa_data
+  FROM {{ ref('stg_api_alpha__empresa_data') }} AS empresa_data
+
 ), renamed AS (
   SELECT
+
   idx_CIK,
   direccion,
   descripcion,
   traduccion,
-    REGEXP_SUBSTR(Respuesta_cortex, '\\\"[^\"]+\\\"', 1, 2) AS respuesta_extraida, /* Extrae la respuesta de cortex traducida*/
+  REGEXP_SUBSTR(Respuesta_cortex, '\\\"[^\"]+\\\"', 1, 2) AS respuesta_extraida, /* Extrae la respuesta de cortex traducida*/
   id_simbolo,
   simbolo,
   nombre_empresa,
@@ -32,7 +36,10 @@ WITH source AS (
   id_moneda, /* Clave única para identificar los datos de la moneda */
   id_pais, /* Clave única para identificar los datos del país */
   pais,
-  id_raiz_dlt
+  id_raiz_dlt,
+  nombre_del_pipeline,
+  fecha_de_creacion,
+  fecha_insercion
   
   FROM source
 )
@@ -64,7 +71,11 @@ SELECT
   id_moneda, /* Clave única para identificar los datos de la moneda */
   id_pais, /* Clave única para identificar los datos del país */
   pais,
-  id_raiz_dlt
+  id_raiz_dlt,
+  nombre_del_pipeline,
+  fecha_de_creacion,
+  fecha_insercion
   
 
 FROM renamed
+

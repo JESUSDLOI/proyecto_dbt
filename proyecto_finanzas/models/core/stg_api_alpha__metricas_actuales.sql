@@ -1,7 +1,7 @@
 WITH source AS (
   SELECT
     *
-  FROM {{ ref('base_api_alpha__empresa_data') }} AS empresa_data
+  FROM {{ ref('stg_api_alpha__empresa_data') }} AS empresa_data
 ),
 renamed AS (
 SELECT

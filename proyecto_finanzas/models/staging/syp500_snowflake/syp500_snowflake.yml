@@ -1,0 +1,141 @@
+version: 2
+
+models:
+  - name: stg_syp500_snowflake__sp_500__hechos_web
+    columns:
+      - name: id_simbolo_hist
+        description: "Identificador histórico del símbolo en la tabla de hechos web."
+        tests:
+          - dbt_utils.relationships_where:
+              to: ref('stg_syp500_snowflake__sp_500__dims')
+              field: id_simbolo
+
+      - name: id_pais_hist
+        description: "Identificador histórico del país en la tabla de hechos web."
+        tests:
+          - dbt_utils.relationships_where:
+              to: ref('stg_syp500_snowflake__sp_500__dims')
+              field: id_pais
+
+      - name: id_web_hist
+        description: "Identificador histórico del sitio web en la tabla de hechos web."
+        tests:
+          - dbt_utils.relationships_where:
+              to: ref('stg_syp500_snowflake__sp_500__dims')
+              field: id_web
+
+      - name: dura_prom_visi_escri
+        description: "Duración promedio de visitas desde escritorio en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: tasa_rebote_escri
+        description: "Tasa de rebote desde escritorio en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: pag_visi_escri
+        description: "Páginas vistas por visita desde escritorio en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: visi_escritorio
+        description: "Número de visitas desde escritorio en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: dura_prom_visi_mvl
+        description: "Duración promedio de visitas desde móvil en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: tasa_rebote_mvl
+        description: "Tasa de rebote desde móvil en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: pag_por_visi_mvl
+        description: "Páginas vistas por visita desde móvil en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: visi_mvl
+        description: "Número de visitas desde móvil en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: dura_prom_visi_totl
+        description: "Duración promedio de visitas totales en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: tasa_rebote_totl
+        description: "Tasa de rebote total en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: pag_por_visita_totl
+        description: "Páginas vistas por visita total en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: visi_totl
+        description: "Número total de visitas en la tabla de hechos web."
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: stg_syp500_snowflake__sp_500__dims
+    description: "Tabla con datos históricos y métricas de visitas"
+    columns:
+      - name: simbolo
+        description: "Ticker (identificador de la empresa) utilizado en los mercados financieros."
+        tests:
+          - not_null
+
+      - name: pais
+        description: "País de origen del tráfico."
+        tests:
+          - not_null
+
+      - name: id_pais_hist
+        description: "Identificador histórico único del país en el que está registrada la empresa."
+        tests:
+          - not_null
+
+      - name: id_simbolo_hist
+        description: "Identificador histórico único del símbolo bursátil de la empresa."
+        tests:
+          - not_null
+
+      - name: nombre_empresa
+        description: "Nombre oficial de la empresa."
+        tests:
+          - not_null
+
+      - name: id_web_hist
+        description: "Identificador histórico único del sitio web de la empresa."
+        tests:
+          - not_null
+
+      - name: sitio_web
+        description: "Dominio correspondiente a las métricas del sitio web de la empresa."
+        tests:
+          - not_null
+
+      - name: fecha
+        description: "Fecha correspondiente al dato en UTC con granularidad de día."
+        tests:
+          - not_null
+          - fecha_inferior_actual
