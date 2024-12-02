@@ -1,11 +1,23 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key=['id_metrica_his'],
+        incremental_strategy='merge',
+        on_schema_change='fail'    
+    )
+}}
+
+
+
 WITH source AS (
   SELECT
     *
   FROM {{ ref('snapshot__empresa_data') }} AS empresa_data
-  where dbt_valid_to is null
+  where dbt_valid_to is not null
 ),
 renamed AS (
 SELECT
+  {{ dbt_utils.generate_surrogate_key(['id_simbolo', 'id_carga_dlt']) }} as id_metrica_his,
   id_simbolo,
   id_activo,
   id_bolsa,
@@ -46,6 +58,7 @@ SELECT
   valor_min_sem_52,
   media_movil_50_dias,
   media_movil_200_dias,
+  acciones_circulando,
   fecha_divid,
   fecha_ex_divid,
   id_carga_dlt,
@@ -59,3 +72,9 @@ FROM source
 SELECT
   *
 FROM renamed
+
+{% if is_incremental() %}
+
+  where id_carga_dlt > (select max(id_carga_dlt) from {{ this }})
+
+{% endif %}

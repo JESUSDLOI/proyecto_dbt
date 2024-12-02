@@ -2,8 +2,8 @@
 WITH source AS (
   SELECT
     *
-  FROM {{ ref('core__metricas_historicas') }} AS metricas
-  left join {{ ref('stg_core__dim_nombres') }} as empresa
+  FROM {{ ref('metricas_historicas') }} AS metricas
+  left join {{ ref('core__dim_nombres') }} as empresa
       on metricas.id_simbolo = empresa.id_simbolo
 ), renamed as(
 -- Margen Bruto

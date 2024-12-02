@@ -19,27 +19,27 @@ models:
       - name: ambito_neg1
         description: "Primer ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
         tests:
-          - max_tres_palabras
+          - max_tres_pala
 
       - name: ambito_neg2
         description: "Segundo ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
         tests:
-          - max_tres_palabras
+          - max_tres_pala
 
       - name: ambito_neg3
         description: "Tercer ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
         tests:
-          - max_tres_palabras
+          - max_tres_pala
 
       - name: ambito_neg4
         description: "Cuarto ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
         tests:
-          - max_tres_palabras
+          - max_tres_pala
 
       - name: ambito_neg5
         description: "Quinto ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
         tests:
-          - max_tres_palabras
+          - max_tres_pala
 
       - name: id_simbolo
         description: "Identificador único del símbolo bursátil de la empresa."
@@ -129,161 +129,6 @@ models:
           - not_null
           - fecha_inferior_actual
 
-  - name: stg_api_alpha__empresa_data
-    description: "Tabla con datos financieros y de identificación de empresas"
-    columns:
-      - name: simbolo
-        description: "Símbolo bursátil de la empresa utilizado en los mercados financieros."
-      - name: id_simbolo
-        description: "Identificador único del símbolo bursátil de la empresa."
-      - name: tipo_activo
-        description: "Tipo de activo de la empresa, como acciones, bonos, etc."
-      - name: nombre_empresa
-        description: "Nombre oficial de la empresa."
-        tests:
-          - not_null
-      - name: descripcion
-        description: "Descripción detallada de la empresa, incluyendo su misión, visión, productos y servicios ofrecidos."
-        tests:
-          - not_null
-      - name: idx_CIK
-        description: "Índice de Clasificación de la Comisión de Bolsa y Valores (CIK) que identifica de manera única a las empresas registradas en la SEC."
-      - name: bolsa
-        description: "Bolsa de valores en la que cotiza la empresa, como NYSE, NASDAQ, etc."
-      - name: moneda
-        description: "Moneda en la que opera la empresa, como USD, EUR, etc."
-      - name: pais
-        description: "País en el que está registrada la empresa."
-      - name: sector
-        description: "Sector económico en el que opera la empresa, como tecnología, salud, finanzas, etc."
-      - name: industria
-        description: "Industria específica dentro del sector económico en la que opera la empresa."
-      - name: direccion
-        description: "Dirección física de la sede principal de la empresa, incluyendo calle, número, ciudad, estado y código postal."
-        tests:
-          - not_null
-          - valid_address_format
-      - name: sitio_web
-        description: "URL del sitio web oficial de la empresa."
-      - name: fin_anyo_fiscal
-        description: "Fin del año fiscal de la empresa."
-      - name: ultimo_trimestre
-        description: "Último trimestre reportado de la empresa."
-      - name: capitalizacion_mercado
-        description: "Capitalización de mercado de la empresa."
-      - name: ebitda
-        description: "EBITDA (Earnings Before Interest, Taxes, Depreciation, and Amortization) de la empresa."
-      - name: ratio_precio_ganancia
-        description: "Relación precio-ganancia de la empresa."
-      - name: ratio_peg
-        description: "Relación precio-ganancias ajustada al crecimiento (PEG ratio) de la empresa."
-      - name: valor_contable
-        description: "Valor contable de la empresa."
-      - name: dividendo_por_accion
-        description: "Dividendo por acción de la empresa."
-      - name: rend_div_accion_porc
-        description: "Rendimiento de dividendos por acción en porcentaje."
-      - name: ganancia_por_accion
-        description: "Ganancia por acción de la empresa."
-      - name: ingresos_por_accion
-        description: "Ingresos por acción de la empresa."
-      - name: margen_ganancia
-        description: "Margen de ganancia de la empresa."
-      - name: margen_operativo
-        description: "Margen operativo de la empresa."
-      - name: retn_sobre_activos
-        description: "Retorno sobre activos de la empresa."
-      - name: retn_sobre_patri
-        description: "Retorno sobre patrimonio de la empresa."
-      - name: ingresos_acci_anyo
-        description: "Ingresos por acción anual de la empresa."
-      - name: beneficio_bruto
-        description: "Beneficio bruto de la empresa."
-      - name: eps_diluido
-        description: "EPS (Earnings Per Share) diluido de la empresa."
-      - name: crec_gana_trim
-        description: "Crecimiento de ganancias trimestrales de la empresa."
-      - name: crec_ingre_trim
-        description: "Crecimiento de ingresos trimestrales de la empresa."
-      - name: precio_obj_anali
-        description: "Precio objetivo del analista para la empresa."
-      - name: precio_ganan
-        description: "Precio de ganancia de la empresa."
-      - name: precio_ganan_fut
-        description: "Precio de ganancia futura de la empresa."
-      - name: rat_precio_venta
-        description: "Relación precio-venta de la empresa."
-      - name: rat_precio_valor
-        description: "Relación precio-valor de la empresa."
-      - name: valor_ingresos
-        description: "Valor de ingresos de la empresa."
-      - name: valor_ebitda
-        description: "Valor de EBITDA de la empresa."
-      - name: beta
-        description: "Beta de la empresa."
-      - name: valor_max_sem_52
-        description: "Valor máximo de 52 semanas de la empresa."
-      - name: valor_min_sem_52
-        description: "Valor mínimo de 52 semanas de la empresa."
-      - name: media_movil_50_dias
-        description: "Media móvil de 50 días de la empresa."
-      - name: media_movil_200_dias
-        description: "Media móvil de 200 días de la empresa."
-      - name: acciones_circulando
-        description: "Número de acciones en circulación de la empresa."
-      - name: fecha_divid
-        description: "Fecha en la que se paga el dividendo."
-      - name: fecha_ex_divid
-        description: "Fecha en la que una acción se negocia sin el dividendo."
-      - name: id_carga_dlt
-        description: "Identificador de la carga de datos."
-        tests:
-          - not_null
-      - name: id_raiz_dlt
-        description: "Identificador único del linaje de datos."
-        tests:
-          - not_null
-          - unique
-      - name: id_moneda
-        description: "Clave única para identificar los datos de la moneda."
-        tests:
-          - not_null
-      - name: id_pais
-        description: "Clave única para identificar los datos del país."
-        tests:
-          - not_null
-      - name: id_bolsa
-        description: "Clave única para identificar los datos de la bolsa."
-        tests:
-          - not_null
-      - name: id_sector
-        description: "Clave única para identificar los datos del sector."
-        tests:
-          - not_null
-      - name: id_industria
-        description: "Clave única para identificar los datos de la industria."
-        tests:
-          - not_null
-      - name: id_activo
-        description: "Clave única para identificar los datos de la empresa."
-        tests:
-          - not_null
-      - name: id_web
-        description: "Clave única para identificar los datos del sitio web."
-        tests:
-          - not_null
-      - name: nombre_del_pipeline
-        description: "Nombre del pipeline que procesó los datos."
-      - name: fecha_de_creacion
-        description: "Fecha de creación del registro en el sistema."
-        tests:
-          - not_null
-          - fecha_inferior_actual
-      - name: fecha_insercion
-        description: "Fecha de inserción del registro en la base de datos."
-        tests:
-          - not_null
-          - fecha_inferior_actual
 
   - name: stg_metadata_dlt
     description: "Tabla con datos de carga y metadatos de procesamiento"

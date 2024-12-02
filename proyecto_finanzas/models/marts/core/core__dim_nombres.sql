@@ -8,7 +8,7 @@ WITH source AS (
 SELECT distinct id_simbolo
   , simbolo
   , nombre_empresa
-  , valid_from
-  , valid_to
+  --, valid_from
+  --, valid_to
 
 FROM source

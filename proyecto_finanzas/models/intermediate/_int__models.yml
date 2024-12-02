@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: int_visitas_web_trimestre
+    description: "Modelo que contiene las visitas web trimestrales de las empresas."
+    columns:
+      - name: id_simbolo_hist
+        description: "Identificador histórico del símbolo de la empresa."
+        tests:
+          - not_null
+      - name: num_paises
+        description: "Número de países donde la empresa tiene presencia."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_pais_hist')
+              field: id_pais_hist
+      - name: num_webs
+        description: "Número de sitios web de la empresa."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_web_hist')
+              field: id_web_hist
+      - name: fecha_trimestre
+        description: "Fecha del trimestre."
+        tests:
+          - not_null
+      - name: dura_prom_visi_escri_qurtr
+        description: "Duración promedio de visita en escritorio en el trimestre."
+        tests:
+          - not_null
+      - name: tasa_rebote_escri_qurtr
+        description: "Tasa de rebote en escritorio en el trimestre."
+        tests:
+          - not_null
+      - name: pag_visi_escri_qurtr
+        description: "Páginas por visita promedio en escritorio en el trimestre."
+        tests:
+          - not_null
+      - name: visi_escritorio_qurtr
+        description: "Número estimado de visitas en escritorio en el trimestre."
+        tests:
+          - not_null
+      - name: dura_prom_visi_mvl_qurtr
+        description: "Duración promedio de visita en móvil en el trimestre."
+        tests:
+          - not_null
+      - name: tasa_rebote_mvl_qurtr
+        description: "Tasa de rebote en móvil en el trimestre."
+        tests:
+          - not_null
+      - name: pag_por_visi_mvl_qurtr
+        description: "Páginas por visita promedio en móvil en el trimestre."
+        tests:
+          - not_null
+      - name: visi_mvl_qurtr
+        description: "Número estimado de visitas en móvil en el trimestre."
+        tests:
+          - not_null
+      - name: dura_prom_visi_totl_qurtr
+        description: "Duración promedio de visita total en el trimestre."
+        tests:
+          - not_null
+      - name: tasa_rebote_totl_qurtr
+        description: "Tasa de rebote total en el trimestre."
+        tests:
+          - not_null
+      - name: pag_por_visita_totl_qurtr
+        description: "Páginas por visita promedio total en el trimestre."
+        tests:
+          - not_null
+      - name: visi_totl_qurtr
+        description: "Número estimado de visitas totales en el trimestre."
+        tests:
+          - not_null

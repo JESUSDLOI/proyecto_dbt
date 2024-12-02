@@ -76,3 +76,44 @@ models:
         description: "Fecha de inicio del año"
       - name: year_end_date
         description: "Fecha de fin del año"
+
+  - name: core__dim_pais
+    description: "Dimensión que contiene la información de los países."
+    columns:
+      - name: id_pais
+        description: "Identificador único del país."
+        tests:
+          - not_null
+          - unique
+      - name: pais
+        description: "Nombre del país."
+        tests:
+          - not_null
+
+version: 2
+
+models:
+  - name: core__dim_nombres
+    description: "Dimensión que contiene los nombres de las empresas."
+    columns:
+      - name: id_simbolo
+        description: "Identificador único del símbolo de la empresa."
+        tests:
+          - not_null
+          - unique
+      - name: simbolo
+        description: "Ticker (identificador de la empresa)."
+        tests:
+          - not_null
+      - name: nombre_empresa
+        description: "Nombre de la empresa."
+        tests:
+          - not_null
+      - name: valid_from
+        description: "Fecha y hora de inicio de validez."
+        tests:
+          - not_null
+      - name: valid_to
+        description: "Fecha y hora de fin de validez."
+        tests:
+          - not_null

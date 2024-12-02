@@ -8,8 +8,8 @@ SELECT distinct
 
         id_bolsa
         , bolsa
-        , valid_from
-        , valid_to
+     --   , valid_from
+       -- , valid_to
 
   FROM source
 

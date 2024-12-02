@@ -22,8 +22,8 @@ WITH source AS (
     pag_por_visita_totl_qurtr,
     visi_totl_qurtr
 
-  FROM {{ ref('core__metricas_historicas') }} AS metricas
-  left join {{ ref('stg_core__dim_nombres') }} as empresa
+  FROM {{ ref('metricas_historicas') }} AS metricas
+  left join {{ ref('core__dim_nombres') }} as empresa
       on metricas.id_simbolo = empresa.id_simbolo
   left join {{ ref('int_visitas_web_trimestre') }} as visitas
       on  metricas.id_simbolo = visitas.id_simbolo_hist and metricas.fecha_fiscal_final = visitas.fecha_trimestre

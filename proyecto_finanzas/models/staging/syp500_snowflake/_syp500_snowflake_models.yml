@@ -103,8 +103,9 @@ models:
           - dbt_utils.accepted_range:
               min_value: 0
 
+
   - name: stg_syp500_snowflake__sp_500__dims
-    description: "Tabla con datos históricos y métricas de visitas"
+    description: "Tabla renombrada con datos históricos y métricas de visitas"
     columns:
       - name: simbolo
         description: "Ticker (identificador de la empresa) utilizado en los mercados financieros."

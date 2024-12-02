@@ -1,0 +1,423 @@
+
+version: 2
+
+models:
+
+    - name: base_api_alpha__empresa_data
+      description: "Modelo que contiene los datos de las empresas obtenidos de la API Alpha."
+      columns:
+        - name: simbolo
+          description: "Símbolo de la empresa."
+          tests:
+            - not_null
+        - name: id_simbolo
+          description: "Clave única para identificar los datos de la empresa."
+          tests:
+            - not_null
+            - unique
+        - name: tipo_activo
+          description: "Tipo de activo (Equity, ETF, etc.)."
+          tests:
+            - not_null
+        - name: nombre_empresa
+          description: "Nombre de la empresa."
+          tests:
+            - not_null
+        - name: descripcion
+          description: "Descripción de la empresa."
+        - name: idx_CIK
+          description: "Índice de Clasificación de la Comisión de Bolsa y Valores (CIK)."
+        - name: bolsa
+          description: "Bolsa de valores."
+        - name: moneda
+          description: "Moneda."
+        - name: pais
+          description: "País."
+        - name: sector
+          description: "Sector."
+        - name: industria
+          description: "Industria."
+        - name: direccion
+          description: "Dirección de la empresa."
+        - name: sitio_web
+          description: "Sitio web oficial de la empresa."
+        - name: fin_anyo_fiscal
+          description: "Mes de finalización del año fiscal."
+        - name: ultimo_trimestre
+          description: "Último trimestre reportado."
+        - name: capitalizacion_mercado
+          description: "Capitalización de mercado."
+        - name: ebitda
+          description: "EBITDA (Ganancias antes de intereses, impuestos, depreciación y amortización)."
+        - name: ratio_precio_ganancia
+          description: "Relación precio-ganancia."
+        - name: ratio_peg
+          description: "Relación precio-ganancias ajustada al crecimiento."
+        - name: valor_contable
+          description: "Valor contable."
+        - name: dividendo_por_accion
+          description: "Dividendo por acción."
+        - name: rend_div_accion_porc
+          description: "Rendimiento del dividendo por acción en porcentaje."
+        - name: ganancia_por_accion
+          description: "Ganancia por acción."
+        - name: ingresos_por_accion
+          description: "Ingresos por acción."
+        - name: margen_ganancia
+          description: "Margen de ganancia."
+        - name: margen_operativo
+          description: "Margen operativo."
+        - name: retn_sobre_activos
+          description: "Retorno sobre activos."
+        - name: retn_sobre_patri
+          description: "Retorno sobre patrimonio."
+        - name: ingresos_acci_anyo
+          description: "Ingresos por acción anual."
+        - name: beneficio_bruto
+          description: "Beneficio bruto."
+        - name: eps_diluido
+          description: "Ganancias por acción diluidas el último año."
+        - name: crec_gana_trim
+          description: "Crecimiento de las ganancias trimestrales interanual."
+        - name: crec_ingre_trim
+          description: "Crecimiento de los ingresos trimestrales interanual."
+        - name: precio_obj_anali
+          description: "Precio objetivo del analista."
+        - name: precio_ganan
+          description: "Precio/Ganancia."
+        - name: precio_ganan_fut
+          description: "Precio/Ganancia futuro."
+        - name: rat_precio_venta
+          description: "Relación precio-ventas."
+        - name: rat_precio_valor
+          description: "Relación precio-valor."
+        - name: valor_ingresos
+          description: "Valor de la empresa/Ingresos."
+        - name: valor_ebitda
+          description: "Valor de la empresa/EBITDA."
+        - name: beta
+          description: "Beta (coeficiente de riesgo)."
+        - name: valor_max_sem_52
+          description: "Máximo de 52 semanas."
+        - name: valor_min_sem_52
+          description: "Mínimo de 52 semanas."
+        - name: media_movil_50_dias
+          description: "Media móvil de 50 días."
+        - name: media_movil_200_dias
+          description: "Media móvil de 200 días."
+        - name: acciones_circulando
+          description: "Número de acciones en circulación."
+        - name: fecha_divid
+          description: "Fecha en la que se paga el dividendo."
+        - name: fecha_ex_divid
+          description: "Fecha en la que una acción se negocia sin el dividendo."
+        - name: id_carga_dlt
+          description: "ID de la carga."
+          tests:
+            - not_null
+        - name: id_raiz_dlt
+          description: "ID del registro."
+          tests:
+            - not_null
+        - name: id_moneda
+          description: "Clave única para identificar los datos de la moneda."
+          tests:
+            - not_null
+        - name: id_pais
+          description: "Clave única para identificar los datos del país."
+          tests:
+            - not_null
+        - name: id_bolsa
+          description: "Clave única para identificar los datos de la bolsa."
+          tests:
+            - not_null
+        - name: id_sector
+          description: "Clave única para identificar los datos del sector."
+          tests:
+            - not_null
+        - name: id_industria
+          description: "Clave única para identificar los datos de la industria."
+          tests:
+            - not_null
+        - name: id_activo
+          description: "Clave única para identificar los datos del activo."
+          tests:
+            - not_null
+        - name: id_web
+          description: "Clave única para identificar los datos del sitio web."
+          tests:
+            - not_null
+
+
+    - name: base_api_alpha_EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS
+      description: "Modelo que contiene los datos del balance general trimestral de las empresas obtenidos de la API Alpha."
+      columns:
+        - name: simbolo
+          description: "Símbolo de la empresa."
+          tests:
+            - not_null
+        - name: id_simbolo
+          description: "Clave única para identificar los datos de la empresa."
+          tests:
+            - not_null
+            - unique
+        - name: fecha_carga
+          description: "Fecha de la carga."
+          tests:
+            - not_null
+        - name: fecha_fiscal_final
+          description: "Fecha de finalización del período fiscal."
+          tests:
+            - not_null
+        - name: moneda
+          description: "Moneda reportada."
+          tests:
+            - not_null
+        - name: total_activos
+          description: "Total de activos."
+        - name: activos_corrientes
+          description: "Activos corrientes."
+        - name: efectivo_equivalente
+          description: "Efectivo y equivalentes de efectivo."
+        - name: efectivo_inversiones_corto_plazo
+          description: "Inversiones a corto plazo."
+        - name: inventario
+          description: "Inventario."
+        - name: cuentas_por_cobrar
+          description: "Cuentas por cobrar netas."
+        - name: activos_no_corrientes
+          description: "Activos no corrientes."
+        - name: propiedades
+          description: "Propiedades, planta y equipo."
+        - name: depreciacion_acumulada
+          description: "Depreciación acumulada."
+        - name: activos_intangibles
+          description: "Activos intangibles."
+        - name: activos_intangibles_sin_plusvalia
+          description: "Activos intangibles excluyendo plusvalía."
+        - name: plusvalia
+          description: "Plusvalía."
+        - name: inversiones
+          description: "Inversiones."
+        - name: inversiones_largo_plazo
+          description: "Inversiones a largo plazo."
+        - name: inversiones_corto_plazo
+          description: "Inversiones a corto plazo."
+        - name: otros_activos_corrientes
+          description: "Otros activos corrientes."
+        - name: otros_activos_no_corrientes
+          description: "Otros activos no corrientes."
+        - name: total_pasivos
+          description: "Total de pasivos."
+        - name: pasivos_corrientes
+          description: "Pasivos corrientes."
+        - name: cuentas_por_pagar
+          description: "Cuentas por pagar corrientes."
+        - name: ingresos_diferidos
+          description: "Ingresos diferidos."
+        - name: deuda_corriente
+          description: "Deuda corriente."
+        - name: deuda_corto_plazo
+          description: "Deuda a corto plazo."
+        - name: pasivos_no_corrientes
+          description: "Pasivos no corrientes."
+        - name: obligaciones_arrendamiento
+          description: "Obligaciones de arrendamiento de capital."
+        - name: deuda_largo_plazo
+          description: "Deuda a largo plazo."
+        - name: deuda_corriente_largo_plazo
+          description: "Deuda corriente a largo plazo."
+        - name: deuda_no_corriente_largo_plazo
+          description: "Deuda no corriente a largo plazo."
+        - name: deuda_total
+          description: "Deuda total a corto y largo plazo."
+        - name: otros_pasivos_corrientes
+          description: "Otros pasivos corrientes."
+        - name: otros_pasivos_no_corrientes
+          description: "Otros pasivos no corrientes."
+        - name: patrimonio_total
+          description: "Patrimonio total de los accionistas."
+        - name: acciones_tesoreria
+          description: "Acciones en tesorería."
+        - name: ganancias_retenidas
+          description: "Ganancias retenidas."
+        - name: acciones_comunes
+          description: "Acciones comunes."
+        - name: acciones_comunes_en_circulacion
+          description: "Acciones comunes en circulación."
+        - name: id_padre_dlt
+          description: "ID padre."
+          tests:
+            - not_null
+        - name: indice_lista_dlt
+          description: "Índice de lista."
+          tests:
+            - not_null
+        - name: id_dlt
+          description: "ID del dato DLT."
+          tests:
+            - not_null
+            - unique
+        - name: id_metrica
+          description: "Clave única para identificar las métricas de la empresa."
+          tests:
+            - not_null
+            - unique
+
+
+
+    - name: base_api_alpha_EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS
+      description: "Modelo que contiene los datos del estado de resultados trimestral de las empresas obtenidos de la API Alpha."
+      columns:
+        - name: simbolo
+          description: "Símbolo de la empresa."
+          tests:
+            - not_null
+        - name: id_simbolo
+          description: "Clave única para identificar los datos de la empresa."
+          tests:
+            - not_null
+            - unique
+        - name: fecha_carga
+          description: "Fecha de la carga."
+          tests:
+            - not_null
+        - name: fecha_fiscal_final
+          description: "Fecha en la que finaliza el período fiscal."
+          tests:
+            - not_null
+        - name: moneda_reportada
+          description: "Moneda en la que se reportan los datos financieros."
+          tests:
+            - not_null
+        - name: utilidad_bruta
+          description: "Beneficio bruto obtenido antes de deducir los gastos operativos."
+        - name: ingresos_totales
+          description: "Ingresos totales generados por la empresa."
+        - name: costo_de_ingresos
+          description: "Costos asociados directamente con la generación de ingresos."
+        - name: costo_de_bienes_y_servicios_vendidos
+          description: "Costos de los bienes y servicios vendidos."
+        - name: ingreso_operativo
+          description: "Ingreso generado por las operaciones principales de la empresa."
+        - name: gastos_generales_y_administrativos
+          description: "Gastos relacionados con la venta, administración y otros gastos generales."
+        - name: investigacion_y_desarrollo
+          description: "Gastos en investigación y desarrollo."
+        - name: gastos_operativos
+          description: "Gastos totales incurridos en las operaciones de la empresa."
+        - name: ingresos_por_inversion_netos
+          description: "Ingresos netos obtenidos de inversiones."
+        - name: ingresos_netos_por_intereses
+          description: "Ingresos netos obtenidos por intereses."
+        - name: ingresos_por_intereses
+          description: "Ingresos obtenidos por intereses."
+        - name: gastos_por_intereses
+          description: "Gastos incurridos por intereses."
+        - name: ingresos_no_intereses
+          description: "Ingresos obtenidos que no están relacionados con intereses."
+        - name: otros_ingresos_no_operativos
+          description: "Otros ingresos obtenidos que no están relacionados con las operaciones principales."
+        - name: depreciacion
+          description: "Gastos de depreciación de activos."
+        - name: depreciacion_y_amortizacion
+          description: "Gastos combinados de depreciación y amortización."
+        - name: ingreso_antes_de_impuestos
+          description: "Ingreso obtenido antes de deducir los impuestos."
+        - name: gastos_por_impuestos
+          description: "Gastos incurridos por impuestos."
+        - name: gastos_por_intereses_y_deudas
+          description: "Gastos combinados por intereses y deudas."
+        - name: ingreso_neto_de_operaciones_continuas
+          description: "Ingreso neto obtenido de operaciones continuas."
+        - name: ingreso_integral_neto_de_impuestos
+          description: "Ingreso integral neto después de impuestos."
+        - name: ebit
+          description: "Beneficio antes de intereses e impuestos."
+        - name: ebitda
+          description: "Beneficio antes de intereses, impuestos, depreciación y amortización."
+        - name: ingreso_neto
+          description: "Ingreso neto total."
+        - name: id_padre_dlt
+          description: "Identificador del padre en el sistema DLT."
+          tests:
+            - not_null
+        - name: indice_lista_dlt
+          description: "Índice de lista en el sistema DLT."
+          tests:
+            - not_null
+        - name: id_dlt
+          description: "Identificador único en el sistema DLT."
+          tests:
+            - not_null
+            - unique
+        - name: id_metrica
+          description: "Clave única para identificar las métricas de la empresa."
+          tests:
+            - not_null
+            - unique
+
+
+    - name: base_api_alpha__DLT_LOADS
+      description: "Modelo que contiene la información de las cargas de datos de API Alpha."
+      columns:
+        - name: id_carga_dlt
+          description: "Identificador único de la carga."
+          tests:
+            - not_null
+            - unique
+        - name: nombre_esquema
+          description: "Nombre del esquema."
+          tests:
+            - not_null
+        - name: estado
+          description: "Estado de la carga."
+          tests:
+            - not_null
+        - name: fecha_insercion
+          description: "Fecha y hora en que se insertó la carga en UTC."
+          tests:
+            - not_null
+        - name: hash_version_esquema
+          description: "Hash de la versión del esquema."
+          tests:
+            - not_null
+
+
+    - name: base_api_alpha__DLT_PIPELINE_STATE
+      description: "Modelo que contiene el estado del pipeline de datos de API Alpha."
+      columns:
+        - name: vers
+          description: "Versión del pipeline."
+          tests:
+            - not_null
+        - name: version_del_motor
+          description: "Versión del motor."
+          tests:
+            - not_null
+        - name: nombre_del_pipeline
+          description: "Nombre del pipeline."
+          tests:
+            - not_null
+        - name: estado
+          description: "Estado del pipeline."
+          tests:
+            - not_null
+        - name: fecha_de_creacion
+          description: "Fecha y hora de creación en UTC."
+          tests:
+            - not_null
+        - name: hash_de_la_version
+          description: "Hash de la versión del pipeline."
+          tests:
+            - not_null
+        - name: id_carga_dlt
+          description: "ID de carga DLT."
+          tests:
+            - not_null
+        - name: id_dlt
+          description: "ID DLT."
+          tests:
+            - not_null
+            - unique
+
