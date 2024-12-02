@@ -1,15 +1,16 @@
 {{
     config(
         materialized='incremental',
-        unique_key='simbolo',
-        incremental_strategy='delete+insert',
+        unique_key='id_simbolo',
+        incremental_strategy='merge',
         on_schema_change='fail'    
     )
 }}
 
 WITH source AS (
   SELECT
-    *
+    *,
+    max(fecha_carga) over (partition by simbolo) as max_fecha_carga
   FROM {{ source('api_alpha', 'EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS') }} AS a
 
   {% if is_incremental() %}
@@ -67,6 +68,7 @@ WITH source AS (
     CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_dlt, /* ID_dato dlt */
 
   FROM source
+  WHERE fecha_carga = max_fecha_carga
 )
 SELECT
   *

@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key='id_simbolo',
-        incremental_strategy='delete+insert',
+        incremental_strategy='merge',
         on_schema_change='fail'    
     )
 }}

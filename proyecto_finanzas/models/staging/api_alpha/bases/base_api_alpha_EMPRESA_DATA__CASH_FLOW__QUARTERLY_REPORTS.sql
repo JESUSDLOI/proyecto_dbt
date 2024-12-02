@@ -2,14 +2,15 @@
     config(
         materialized='incremental',
         unique_key='id_simbolo',
-        incremental_strategy='delete+insert',
+        incremental_strategy='merge',
         on_schema_change='fail'    
     )
 }}
 
 WITH source AS (
   SELECT
-    *
+    *,
+    max(fecha_carga) over (partition by simbolo) as max_fecha_carga
   FROM {{ source('api_alpha', 'EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS') }} AS EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS
 
   {% if is_incremental() %}
@@ -57,6 +58,7 @@ SELECT
     CAST(TRIM(_DLT_LIST_IDX) AS INTEGER) AS indice_lista_dlt, /* Índice de lista DLT */
     CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_dlt /* Identificador DLT */
   FROM source
+  WHERE fecha_carga = max_fecha_carga
 )
 SELECT
   *

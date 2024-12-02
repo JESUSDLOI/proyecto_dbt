@@ -3,6 +3,7 @@
     config(
         materialized='incremental',
         unique_key='id_simbolo',
+        incremental_strategy='merge',
         on_schema_change='fail'    
     )
 }}
@@ -66,7 +67,7 @@ WITH source AS (
     {{ dbt_utils.generate_surrogate_key(['industria']) }} AS id_industria, /* Clave única para identificar los datos de la industria */
     {{ dbt_utils.generate_surrogate_key(['tipo_activo']) }} AS id_activo, /* Clave única para identificar los datos de la empresa */
     {{ dbt_utils.generate_surrogate_key(['sitio_web']) }} AS id_web, /* Clave única para identificar los datos del sitio web */
-
+    max(fecha_carga) over (partition by id_simbolo) as max_fecha_carga
   FROM {{ source('api_alpha', 'empresa_data') }} AS a 
 
 )
@@ -74,6 +75,7 @@ WITH source AS (
 SELECT
   *
 FROM source
+where fecha_carga = max_fecha_carga
 
 {% if is_incremental() %}
 
