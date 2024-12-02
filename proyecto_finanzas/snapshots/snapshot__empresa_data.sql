@@ -74,11 +74,9 @@ WITH source AS (
         id_industria,
         id_activo,
         id_web,
-        nombre_del_pipeline,
-        fecha_de_creacion,
         fecha_insercion
     FROM source
-    full join {{ ref('stg_metadata_dlt') }} AS b
+    left join {{ ref('stg_metadata_dlt') }} AS b
       on source.id_carga_dlt = b.id_carga_dlt
 )
 SELECT * from renamed

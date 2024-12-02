@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key='id_simbolo',
+        unique_key=['id_metrica'],
         incremental_strategy='merge',
         on_schema_change='fail'    
     )
@@ -13,6 +13,7 @@ WITH source AS (
     a.id_simbolo,
     a.fecha_carga,
     a.fecha_fiscal_final,
+    a.id_metrica,
     utilidad_bruta,
     ingresos_totales,
     costo_de_ingresos,

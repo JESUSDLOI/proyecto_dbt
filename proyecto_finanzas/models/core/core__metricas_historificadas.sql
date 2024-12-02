@@ -1,3 +1,14 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key=['id_metrica_his'],
+        incremental_strategy='merge',
+        on_schema_change='fail'    
+    )
+}}
+
+
+
 WITH source AS (
   SELECT
     *
@@ -6,6 +17,7 @@ WITH source AS (
 ),
 renamed AS (
 SELECT
+  {{ dbt_utils.generate_surrogate_key(['id_simbolo', 'id_carga_dlt']) }} as id_metrica_his,
   id_simbolo,
   id_activo,
   id_bolsa,
@@ -59,3 +71,9 @@ FROM source
 SELECT
   *
 FROM renamed
+
+{% if is_incremental() %}
+
+  where id_carga_dlt > (select max(id_carga_dlt) from {{ this }})
+
+{% endif %}

@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key='id_simbolo',
+        unique_key=['id_metrica'],
         incremental_strategy='merge',
         on_schema_change='fail'    
     )
@@ -9,15 +9,10 @@
 
 WITH source AS (
   SELECT
-    *,
-    max(fecha_carga) over (partition by simbolo) as max_fecha_carga
+    *
   FROM {{ source('api_alpha', 'EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS') }} AS EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS
 
-  {% if is_incremental() %}
 
-    where fecha_carga > (select max(fecha_carga) from {{ this }})
-
-  {% endif %}
 
 ), renamed AS (
 SELECT
@@ -56,10 +51,17 @@ SELECT
     CAST(NULLIF(TRIM(NET_INCOME), 'None') AS NUMERIC(20, 2)) AS ingreso_neto, /* Ingreso neto del período */
     CAST(TRIM(_DLT_PARENT_ID) AS VARCHAR(255)) AS id_padre_dlt, /* Identificador padre DLT */
     CAST(TRIM(_DLT_LIST_IDX) AS INTEGER) AS indice_lista_dlt, /* Índice de lista DLT */
-    CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_dlt /* Identificador DLT */
+    CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_dlt, /* Identificador DLT */
+    {{ dbt_utils.generate_surrogate_key(['id_simbolo', 'fecha_fiscal_final']) }} as id_metrica /* Clave única para identificar las metricas de la empresa */
+
   FROM source
-  WHERE fecha_carga = max_fecha_carga
+
 )
 SELECT
   *
 FROM renamed
+  {% if is_incremental() %}
+
+    where fecha_carga > (select max(fecha_carga) from {{ this }})
+
+  {% endif %}

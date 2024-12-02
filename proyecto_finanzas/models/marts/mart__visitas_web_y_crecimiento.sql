@@ -43,9 +43,9 @@ SELECT
     ingresos_totales / visi_totl_qurtr AS ingresos_por_visi,
     ingreso_neto / visi_totl_qurtr AS utilidad_por_visi,
     ((visi_totl_qurtr - LAG(visi_totl_qurtr) OVER (PARTITION BY simbolo ORDER BY fecha_fiscal_final)) 
-    / LAG(visi_totl_qurtr) OVER (PARTITION BY simbolo ORDER BY fecha_fiscal_final) * 100) AS crecimiento_visitas,
+    / NULLIF(LAG(visi_totl_qurtr) OVER (PARTITION BY simbolo ORDER BY fecha_fiscal_final), 0) * 100) AS crecimiento_visitas,
     ((ingresos_totales - LAG(ingresos_totales) OVER (PARTITION BY simbolo ORDER BY fecha_fiscal_final)) 
-    / LAG(ingresos_totales) OVER (PARTITION BY simbolo ORDER BY fecha_fiscal_final) * 100) AS crecimiento_ingresos
+    / NULLIF(LAG(ingresos_totales) OVER (PARTITION BY simbolo ORDER BY fecha_fiscal_final), 0) * 100) AS crecimiento_ingresos
 
 FROM source
 where fecha_trimestre is not null

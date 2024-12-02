@@ -38,8 +38,6 @@ WITH source AS (
   id_pais, /* Clave única para identificar los datos del país */
   pais,
   id_raiz_dlt,
-  nombre_del_pipeline,
-  fecha_de_creacion,
   fecha_insercion,
   CONVERT_TIMEZONE('UTC',dbt_updated_at) as updated_at,
   CONVERT_TIMEZONE('UTC', dbt_valid_from) as valid_from,
@@ -76,8 +74,6 @@ SELECT
   id_pais, /* Clave única para identificar los datos del país */
   pais,
   id_raiz_dlt,
-  nombre_del_pipeline,
-  fecha_de_creacion,
   fecha_insercion,
   updated_at,
   valid_from,
