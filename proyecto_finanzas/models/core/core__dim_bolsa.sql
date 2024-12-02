@@ -8,11 +8,9 @@ SELECT distinct
 
         id_bolsa
         , bolsa
-  /*
-  , CONVERT_TIMEZONE('UTC', dbt_updated_at) as updated_at
-  , CONVERT_TIMEZONE('UTC', dbt_valid_from) as valid_from
-  , CONVERT_TIMEZONE('UTC', dbt_valid_to) as valid_to
-*/
+        , valid_from
+        , valid_to
+
   FROM source
 
 )

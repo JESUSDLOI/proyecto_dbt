@@ -1,10 +1,29 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='id_simbolo',
+        incremental_strategy='delete+insert',
+        on_schema_change='fail'    
+    )
+}}
+
 WITH source AS (
   SELECT
     *
   FROM {{ source('api_alpha', 'EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS') }} AS EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS
 
+  {% if is_incremental() %}
+
+    where fecha_carga > (select max(fecha_carga) from {{ this }})
+
+  {% endif %}
+
 ), renamed AS (
 SELECT
+
+    CAST(TRIM(simbolo) AS VARCHAR(255)) AS simbolo, /* simbolo de la empresa */
+    {{ dbt_utils.generate_surrogate_key(['simbolo']) }} AS id_simbolo, /* Clave única para identificar los datos de la empresa */
+    CAST(TRIM(fecha_carga) AS VARCHAR(255)) AS fecha_carga, /* fecha de la carga */
     CAST(TRIM(FISCAL_DATE_ENDING) AS DATE) AS fecha_fiscal_final, /* Fecha en la que finaliza el período fiscal, convertida a la zona horaria UTC y luego a formato de fecha */
     CAST(REPORTED_CURRENCY AS VARCHAR(255)) AS moneda_reportada, /* Moneda en la que se reportan los datos financieros */
     CAST(NULLIF(GROSS_PROFIT, 'None') AS NUMERIC(20, 2)) AS utilidad_bruta, /* Beneficio bruto obtenido antes de deducir los gastos operativos */
@@ -31,7 +50,6 @@ SELECT
     CAST(NULLIF(EBIT, 'None') AS NUMERIC(20, 2)) AS ebit, /* Beneficio antes de intereses e impuestos */
     CAST(NULLIF(EBITDA, 'None') AS NUMERIC(20, 2)) AS ebitda, /* Beneficio antes de intereses, impuestos, depreciación y amortización */
     CAST(NULLIF(NET_INCOME, 'None') AS NUMERIC(20, 2)) AS ingreso_neto, /* Ingreso neto total */
-    CAST(_DLT_ROOT_ID AS VARCHAR(255)) AS id_raiz_dlt, /* Identificador raíz en el sistema DLT */
     CAST(_DLT_PARENT_ID AS VARCHAR(255)) AS id_padre_dlt, /* Identificador del padre en el sistema DLT */
     CAST(_DLT_LIST_IDX AS INT) AS indice_lista_dlt, /* Índice de lista en el sistema DLT */
     CAST(_DLT_ID AS VARCHAR(255)) AS id_dlt /* Identificador único en el sistema DLT */
@@ -41,3 +59,4 @@ SELECT
 SELECT
   *
 FROM renamed
+

@@ -1,3 +1,17 @@
+{% snapshot snapshot__empresa_data %}
+
+{{
+    config(
+      target_schema='snapshots',
+      unique_key='id_simbolo',
+      strategy='timestamp',
+      updated_at='fecha_insercion',
+      invalid_hard_delete=True 
+    )
+}}
+
+
+
 WITH source AS (
   SELECT *
   from {{ ref('base_api_alpha__empresa_data') }} AS empresa_data
@@ -68,3 +82,5 @@ WITH source AS (
       on source.id_carga_dlt = b.id_carga_dlt
 )
 SELECT * from renamed
+
+{% endsnapshot %}

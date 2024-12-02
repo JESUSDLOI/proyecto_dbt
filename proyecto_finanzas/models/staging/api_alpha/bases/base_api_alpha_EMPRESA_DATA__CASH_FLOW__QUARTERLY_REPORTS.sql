@@ -1,10 +1,30 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='id_simbolo',
+        incremental_strategy='delete+insert',
+        on_schema_change='fail'    
+    )
+}}
+
 WITH source AS (
   SELECT
     *
   FROM {{ source('api_alpha', 'EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS') }} AS EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS
+
+  {% if is_incremental() %}
+
+    where fecha_carga > (select max(fecha_carga) from {{ this }})
+
+  {% endif %}
+
 ), renamed AS (
 SELECT
-     CAST(TRIM(FISCAL_DATE_ENDING) AS DATE) AS fecha_fiscal_final, /* Fecha de finalización del período fiscal en formato de fecha */
+    
+    CAST(TRIM(simbolo) AS VARCHAR(255)) AS simbolo, /* simbolo de la empresa */
+    {{ dbt_utils.generate_surrogate_key(['simbolo']) }} AS id_simbolo, /* Clave única para identificar los datos de la empresa */
+    CAST(TRIM(fecha_carga) AS VARCHAR(255)) AS fecha_carga, /* fecha de la carga */
+    CAST(TRIM(FISCAL_DATE_ENDING) AS DATE) AS fecha_fiscal_final, /* Fecha de finalización del período fiscal en formato de fecha */
     CAST(TRIM(REPORTED_CURRENCY) AS VARCHAR(255)) AS moneda, /* Moneda en la que se reportan los datos financieros */
     CAST(NULLIF(TRIM(OPERATING_CASHFLOW), 'None') AS NUMERIC(20, 2)) AS flujo_efectivo_operativo, /* Flujo de efectivo generado por las actividades operativas */
     CAST(NULLIF(TRIM(PAYMENTS_FOR_OPERATING_ACTIVITIES), 'None') AS NUMERIC(20, 2)) AS pagos_actividades_operativas, /* Pagos realizados por actividades operativas */
@@ -33,7 +53,6 @@ SELECT
     CAST(NULLIF(TRIM(CHANGE_IN_CASH_AND_CASH_EQUIVALENTS), 'None') AS NUMERIC(20, 2)) AS cambio_efectivo_equivalentes, /* Cambio en efectivo y equivalentes de efectivo */
     CAST(NULLIF(TRIM(CHANGE_IN_EXCHANGE_RATE), 'None') AS NUMERIC(20, 2)) AS cambio_tipo_cambio, /* Cambio en el tipo de cambio */
     CAST(NULLIF(TRIM(NET_INCOME), 'None') AS NUMERIC(20, 2)) AS ingreso_neto, /* Ingreso neto del período */
-    CAST(TRIM(_DLT_ROOT_ID) AS VARCHAR(255)) AS id_raiz_dlt, /* Identificador raíz DLT */
     CAST(TRIM(_DLT_PARENT_ID) AS VARCHAR(255)) AS id_padre_dlt, /* Identificador padre DLT */
     CAST(TRIM(_DLT_LIST_IDX) AS INTEGER) AS indice_lista_dlt, /* Índice de lista DLT */
     CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_dlt /* Identificador DLT */

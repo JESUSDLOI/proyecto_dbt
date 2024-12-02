@@ -1,4 +1,11 @@
-
+{{
+    config(
+        materialized='incremental',
+        unique_key='id_carga_dlt',
+        incremental_strategy='delete+insert',
+        on_schema_change='fail'    
+    )
+}}
 
 WITH source AS (
   SELECT
@@ -14,9 +21,6 @@ WITH source AS (
     CAST(SCHEMA_VERSION_HASH AS VARCHAR(255)) AS hash_version_esquema /* Hash de la versión del esquema */
   FROM source
 )
-
-
-
 
 SELECT
   *

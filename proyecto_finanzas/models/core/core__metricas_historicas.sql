@@ -1,6 +1,17 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='id_simbolo',
+        incremental_strategy='delete+insert',
+        on_schema_change='fail'    
+    )
+}}
+
+
 WITH source AS (
   SELECT
-    id_simbolo,
+    a.id_simbolo,
+    a.fecha_carga,
     a.fecha_fiscal_final,
     utilidad_bruta,
     ingresos_totales,
@@ -26,7 +37,6 @@ WITH source AS (
     ebit,
     c.ebitda,
     b.ingreso_neto,
-    a.id_raiz_dlt,
     a.id_padre_dlt,
     a.indice_lista_dlt,
     a.id_dlt,
@@ -94,15 +104,17 @@ WITH source AS (
     acciones_comunes_en_circulacion
   FROM {{ ref('base_api_alpha_EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS') }} AS a
   inner join {{ ref('base_api_alpha_EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS') }} as b
-      on a.id_raiz_dlt = b.id_raiz_dlt and a.fecha_fiscal_final = b.fecha_fiscal_final
+      on a.id_padre_dlt = b.id_padre_dlt and a.fecha_fiscal_final = b.fecha_fiscal_final
   inner join {{ ref('base_api_alpha_EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS') }} as c
-      on a.id_raiz_dlt = c.id_raiz_dlt and a.fecha_fiscal_final = c.fecha_fiscal_final
-  inner join {{ ref('stg_api_alpha__empresa_data') }} as d
-      on a.id_raiz_dlt = d.id_raiz_dlt
-
+      on a.id_padre_dlt = c.id_padre_dlt and a.fecha_fiscal_final = c.fecha_fiscal_final
 
 )
 
-
 SELECT *
 FROM source
+
+{% if is_incremental() %}
+
+  where fecha_carga > (select max(fecha_carga) from {{ this }})
+
+{% endif %}

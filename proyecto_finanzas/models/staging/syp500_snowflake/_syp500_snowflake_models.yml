@@ -24,6 +24,13 @@ models:
               to: ref('stg_syp500_snowflake__sp_500__dims')
               field: id_web
 
+      - name: fecha
+        description: "Fecha correspondiente al dato en UTC con granularidad de día."
+        tests:
+          - fecha_inferior_actual
+          - not_null
+        data_type: date
+
       - name: dura_prom_visi_escri
         description: "Duración promedio de visitas desde escritorio en la tabla de hechos web."
         tests:
@@ -103,39 +110,47 @@ models:
         description: "Ticker (identificador de la empresa) utilizado en los mercados financieros."
         tests:
           - not_null
+        data_type: varchar
 
       - name: pais
         description: "País de origen del tráfico."
         tests:
           - not_null
+        data_type: varchar
 
       - name: id_pais_hist
         description: "Identificador histórico único del país en el que está registrada la empresa."
         tests:
           - not_null
+        data_type: varchar
 
       - name: id_simbolo_hist
         description: "Identificador histórico único del símbolo bursátil de la empresa."
         tests:
           - not_null
+        data_type: varchar
 
       - name: nombre_empresa
         description: "Nombre oficial de la empresa."
         tests:
           - not_null
+        data_type: varchar
 
       - name: id_web_hist
         description: "Identificador histórico único del sitio web de la empresa."
         tests:
           - not_null
+        data_type: varchar
 
       - name: sitio_web
         description: "Dominio correspondiente a las métricas del sitio web de la empresa."
         tests:
           - not_null
+        data_type: varchar
 
       - name: fecha
         description: "Fecha correspondiente al dato en UTC con granularidad de día."
         tests:
-          - not_null
           - fecha_inferior_actual
+          - not_null
+        data_type: date

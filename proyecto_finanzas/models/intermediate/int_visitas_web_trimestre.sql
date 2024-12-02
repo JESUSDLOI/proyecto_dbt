@@ -7,7 +7,10 @@ WITH source AS (
     FROM {{ ref('stg_syp500_snowflake__sp_500__hechos_web') }} as visitas
 ), renamed AS (
     SELECT 
+    
         id_simbolo_hist,
+        count(DISTINCT id_pais_hist) as num_paises,
+        count(DISTINCT id_web_hist) as num_webs,
         fecha_trimestre,
         SUM(dura_prom_visi_escri) AS dura_prom_visi_escri_qurtr,
         SUM(tasa_rebote_escri) AS tasa_rebote_escri_qurtr,

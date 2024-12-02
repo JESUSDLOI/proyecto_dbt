@@ -1,7 +1,8 @@
 WITH source AS (
   SELECT
     *
-  FROM {{ ref('stg_api_alpha__empresa_data') }} AS empresa_data
+  FROM {{ ref('snapshot__empresa_data') }} AS empresa_data
+  where dbt_valid_to is not null
 ),
 renamed AS (
 SELECT
@@ -48,7 +49,9 @@ SELECT
   fecha_divid,
   fecha_ex_divid,
   id_carga_dlt,
-  id_raiz_dlt
+  id_raiz_dlt,
+  CONVERT_TIMEZONE('UTC', dbt_valid_from) as valid_from,
+  CONVERT_TIMEZONE('UTC', dbt_valid_to) AS valid_to
 
 FROM source
 

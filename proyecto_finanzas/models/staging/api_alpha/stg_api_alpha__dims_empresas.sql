@@ -9,7 +9,8 @@ WITH source AS (
       'What are all the different businesses, services, or products the company offers? with one word separated by commas'
     )::string AS Respuesta_cortex
   /* Añade la función de cortex para traducir y extraer la respuesta */
-  FROM {{ ref('stg_api_alpha__empresa_data') }} AS empresa_data
+  FROM {{ ref('snapshot__empresa_data') }} AS empresa_data
+  where dbt_valid_to is null
 
 ), renamed AS (
   SELECT
@@ -39,7 +40,10 @@ WITH source AS (
   id_raiz_dlt,
   nombre_del_pipeline,
   fecha_de_creacion,
-  fecha_insercion
+  fecha_insercion,
+  CONVERT_TIMEZONE('UTC',dbt_updated_at) as updated_at,
+  CONVERT_TIMEZONE('UTC', dbt_valid_from) as valid_from,
+  CONVERT_TIMEZONE('UTC', dbt_valid_to) AS valid_to
   
   FROM source
 )
@@ -74,8 +78,12 @@ SELECT
   id_raiz_dlt,
   nombre_del_pipeline,
   fecha_de_creacion,
-  fecha_insercion
+  fecha_insercion,
+  updated_at,
+  valid_from,
+  valid_to
   
 
 FROM renamed
+
 

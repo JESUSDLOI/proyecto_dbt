@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='id_carga_dlt',
+        incremental_strategy='delete+insert',
+        on_schema_change='fail'    
+    )
+}}
+
 WITH source AS (
   SELECT
     *
@@ -13,7 +22,14 @@ WITH source AS (
     CAST(_DLT_LOAD_ID AS VARCHAR(167778)) AS id_carga_dlt, /* ID de carga DLT */
     CAST(_DLT_ID AS VARCHAR(255)) AS id_dlt /* ID DLT */
   FROM source
+
 )
 SELECT
   *
 FROM renamed
+
+{% if is_incremental() %}
+
+  where fecha_de_creacion> (select max(fecha_de_creacion) from {{ this }})
+
+{% endif %}

@@ -1,3 +1,12 @@
+
+{{
+    config(
+        materialized='incremental',
+        unique_key='id_simbolo',
+        on_schema_change='fail'    
+    )
+}}
+
 WITH source AS (
   SELECT
     CAST(TRIM(OVERVIEW__SYMBOL) AS VARCHAR(255)) AS simbolo,
@@ -65,3 +74,9 @@ WITH source AS (
 SELECT
   *
 FROM source
+
+{% if is_incremental() %}
+
+  where id_carga_dlt> (select max(id_carga_dlt) from {{ this }})
+
+{% endif %}

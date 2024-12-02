@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='id_carga_dlt',
+        incremental_strategy='delete+insert',
+        on_schema_change='fail'    
+    )
+}}
+
 WITH source AS (
   SELECT
 
@@ -16,3 +25,8 @@ WITH source AS (
     *
   FROM source
 
+{% if is_incremental() %}
+
+  where fecha_insercion> (select max(fecha_insercion) from {{ this }})
+
+{% endif %}

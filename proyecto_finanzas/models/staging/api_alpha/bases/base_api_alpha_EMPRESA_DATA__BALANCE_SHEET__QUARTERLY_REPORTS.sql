@@ -1,9 +1,29 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='simbolo',
+        incremental_strategy='delete+insert',
+        on_schema_change='fail'    
+    )
+}}
+
 WITH source AS (
   SELECT
     *
-  FROM {{ source('api_alpha', 'EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS') }} AS EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS
+  FROM {{ source('api_alpha', 'EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS') }} AS a
+
+  {% if is_incremental() %}
+
+    where fecha_carga > (select max(fecha_carga) from {{ this }})
+
+  {% endif %}
+
 ), renamed AS (
   SELECT
+
+    CAST(TRIM(simbolo) AS VARCHAR(255)) AS simbolo, /* simbolo de la empresa */
+    {{ dbt_utils.generate_surrogate_key(['simbolo']) }} AS id_simbolo, /* Clave única para identificar los datos de la empresa */
+    CAST(TRIM(fecha_carga) AS VARCHAR(255)) AS fecha_carga, /* fecha de la carga */
     CAST(TRIM(FISCAL_DATE_ENDING) AS DATE) AS fecha_fiscal_final, /* Fecha de finalización del período fiscal */
     CAST(TRIM(REPORTED_CURRENCY) AS VARCHAR(255)) AS moneda, /* Moneda reportada */
     CAST(NULLIF(TRIM(TOTAL_ASSETS), 'None') AS numeric(20, 2)) AS total_activos, /* Total de activos */
@@ -42,12 +62,14 @@ WITH source AS (
     CAST(NULLIF(TRIM(RETAINED_EARNINGS), 'None') AS numeric(20, 2)) AS ganancias_retenidas, /* Ganancias retenidas */
     CAST(NULLIF(TRIM(COMMON_STOCK), 'None') AS numeric(20, 2)) AS acciones_comunes, /* Acciones comunes */
     CAST(NULLIF(TRIM(COMMON_STOCK_SHARES_OUTSTANDING), 'None') AS numeric(20, 2)) AS acciones_comunes_en_circulacion, /* Acciones comunes en circulación */
-    CAST(TRIM(_DLT_ROOT_ID) AS VARCHAR(255)) AS id_raiz_dlt, /* ID raíz */
     CAST(TRIM(_DLT_PARENT_ID) AS VARCHAR(255)) AS id_padre_dlt, /* ID padre */
     CAST(NULLIF(TRIM(_DLT_LIST_IDX), 'None') AS numeric(20, 2)) AS indice_lista_dlt, /* Índice de lista */
-    CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_dlt /* ID_dato dlt */
+    CAST(TRIM(_DLT_ID) AS VARCHAR(255)) AS id_dlt, /* ID_dato dlt */
+
   FROM source
 )
 SELECT
   *
 FROM renamed
+
+
