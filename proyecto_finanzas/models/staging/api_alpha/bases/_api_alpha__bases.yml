@@ -147,10 +147,12 @@ models:
           description: "Clave única para identificar los datos del activo."
           tests:
             - not_null
-        - name: id_web
-          description: "Clave única para identificar los datos del sitio web."
+
+        - name: id_empresa
+          description: "Clave única para identificar los datos de la empresa."
           tests:
             - not_null
+            - unique
 
 
     - name: base_api_alpha_EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS

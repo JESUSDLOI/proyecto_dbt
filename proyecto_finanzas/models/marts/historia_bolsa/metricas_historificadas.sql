@@ -20,8 +20,7 @@ SELECT
   id_bolsa,
   id_industria,
   id_sector,
-  idx_CIK, /*id de la informacion de la empresa*/
-  id_web,
+  idx_CIK, 
   id_moneda,
   fin_anyo_fiscal,
   ultimo_trimestre,
@@ -60,6 +59,7 @@ SELECT
   fecha_ex_divid,
   id_carga_dlt,
   id_raiz_dlt,
+  id_empresa,
   CONVERT_TIMEZONE('UTC', dbt_valid_from) as valid_from,
   CONVERT_TIMEZONE('UTC', dbt_valid_to) AS valid_to
 

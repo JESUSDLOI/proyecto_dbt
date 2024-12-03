@@ -73,7 +73,7 @@ WITH source AS (
         id_sector,
         id_industria,
         id_activo,
-        id_web,
+        id_empresa,
         fecha_insercion
     FROM source
     left join {{ ref('stg_metadata_dlt') }} AS b

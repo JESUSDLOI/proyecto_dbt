@@ -63,11 +63,6 @@ models:
         tests:
           - not_null
 
-      - name: id_web
-        description: "Clave única para identificar los datos del sitio web de la empresa."
-        tests:
-          - not_null
-
       - name: sitio_web
         description: "URL del sitio web oficial de la empresa."
 
@@ -130,6 +125,12 @@ models:
         tests:
           - not_null
           - fecha_inferior_actual
+
+      - name: id_empresa
+        description: "Identificador único de la empresa."
+        tests:
+          - not_null
+
 
 
   - name: stg_metadata_dlt

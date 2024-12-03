@@ -36,12 +36,7 @@ models:
           - relationships:
               to: ref('dim_info_empresa')
               field: idx_CIK
-      - name: id_web
-        description: "Identificador del sitio web."
-        tests:
-          - relationships:
-              to: ref('dim_web')
-              field: id_web
+
       - name: id_moneda
         description: "Identificador de la moneda."
         tests:
@@ -129,6 +124,8 @@ models:
 
       - name: valid_to
         description: "Fecha y hora de fin de validez en UTC."
+      - name: id_empresa
+        description: "Identificador de la empresa."
 
 
     

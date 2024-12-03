@@ -6,8 +6,9 @@ WITH source AS (
 ), renamed AS (
 
 SELECT distinct
-
+  id_empresa,
   idx_CIK,
+  sitio_web,
   direccion,
   descripcion,
   traduccion,

@@ -12,7 +12,6 @@ SELECT
   id_industria,
   id_sector,
   idx_CIK, /*id de la informacion de la empresa*/
-  id_web,
   id_moneda,
   fin_anyo_fiscal,
   ultimo_trimestre,
@@ -49,6 +48,7 @@ SELECT
   acciones_circulando,
   fecha_divid,
   fecha_ex_divid,
+  id_empresa,
   id_carga_dlt,
   id_raiz_dlt,
   CONVERT_TIMEZONE('UTC', dbt_valid_from) as valid_from,
@@ -66,7 +66,6 @@ SELECT
    renamed.id_industria,
    renamed.id_sector,
    renamed.idx_CIK, /*id de la informacion de la empresa*/
-   renamed.id_web,
    renamed.id_moneda,
    renamed.fin_anyo_fiscal,
    renamed.ultimo_trimestre,
@@ -105,6 +104,7 @@ SELECT
    renamed.fecha_ex_divid,
    renamed.id_carga_dlt,
    renamed.id_raiz_dlt,
+   renamed.id_empresa,
    renamed.valid_from,
    renamed.valid_to
 FROM renamed
