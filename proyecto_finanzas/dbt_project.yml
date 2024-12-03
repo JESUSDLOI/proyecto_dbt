@@ -35,5 +35,19 @@ models:
   +transient: false
   proyecto_finanzas:
     # Config indicated by + and applies to all files under models/example/
-    
-    +materialized: view
+    staging:
+      +materialized: view
+      +database: "DATOS_SILVER_FINANZAS"
+    intermediate:
+      +materialized: table
+      +database: "DATOS_SILVER_FINANZAS"
+      
+    marts:
+      +materialized: table
+      +database: "DATOS_GOLD_FINANZAS"
+      core:
+          +schema: core
+      analisis_actual:
+          +schema: analisis_actual
+      historia_bolsa:
+          +schema: historia_bolsa
