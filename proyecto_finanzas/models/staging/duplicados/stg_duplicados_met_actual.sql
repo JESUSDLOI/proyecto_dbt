@@ -57,6 +57,60 @@ SELECT
 FROM source
 qualify row_number() over(partition by id_simbolo order by valid_from desc) > 1
 
+), select_duplicados as (
+
+SELECT 
+  renamed.id_simbolo,
+   renamed.id_activo,
+   renamed.id_bolsa,
+   renamed.id_industria,
+   renamed.id_sector,
+   renamed.idx_CIK, /*id de la informacion de la empresa*/
+   renamed.id_web,
+   renamed.id_moneda,
+   renamed.fin_anyo_fiscal,
+   renamed.ultimo_trimestre,
+   renamed.capitalizacion_mercado,
+   renamed.ebitda,
+   renamed.ratio_precio_ganancia,
+   renamed.ratio_peg,
+   renamed.valor_contable,
+   renamed.dividendo_por_accion,
+   renamed.rend_div_accion_porc,
+   renamed.ganancia_por_accion,
+   renamed.ingresos_por_accion,
+   renamed.margen_ganancia,
+   renamed.margen_operativo,
+   renamed.retn_sobre_activos,
+   renamed.retn_sobre_patri,
+   renamed.ingresos_acci_anyo,
+   renamed.beneficio_bruto,
+   renamed.eps_diluido,
+   renamed.crec_gana_trim,
+   renamed.crec_ingre_trim,
+   renamed.precio_obj_anali,
+   renamed.precio_ganan,
+   renamed.precio_ganan_fut,
+   renamed.rat_precio_venta,
+   renamed.rat_precio_valor,
+   renamed.valor_ingresos,
+   renamed.valor_ebitda,
+   renamed.beta,
+   renamed.valor_max_sem_52,
+   renamed.valor_min_sem_52,
+   renamed.media_movil_50_dias,
+   renamed.media_movil_200_dias,
+   renamed.acciones_circulando,
+   renamed.fecha_divid,
+   renamed.fecha_ex_divid,
+   renamed.id_carga_dlt,
+   renamed.id_raiz_dlt,
+   renamed.valid_from,
+   renamed.valid_to
+FROM renamed
+left join source as b
+    on renamed.id_simbolo = b.id_simbolo and renamed.id_carga_dlt = b.id_carga_dlt
+
 )
 
-select * from renamed
+select * from select_duplicados

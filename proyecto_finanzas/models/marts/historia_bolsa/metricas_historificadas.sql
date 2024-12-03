@@ -1,9 +1,6 @@
 {{
     config(
-        materialized='incremental',
-        unique_key=['id_metrica_his'],
-        incremental_strategy='merge',
-        on_schema_change='fail'    
+        materialized='table'   
     )
 }}
 
@@ -73,8 +70,3 @@ SELECT
   *
 FROM renamed
 
-{% if is_incremental() %}
-
-  where id_carga_dlt > (select max(id_carga_dlt) from {{ this }})
-
-{% endif %}

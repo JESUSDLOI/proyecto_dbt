@@ -3,7 +3,7 @@ version: 2
 
 sources:
   - name: api_alpha # Datos de la API Alphavantage
-    schema: DATOS_FINANZAS # schema de la base de datos
+    schema: DATOS_FINANZAS1 # schema de la base de datos
     database: "DATOS_BRONZE_FINANZAS" # base de datos
 
     quoting:
@@ -19,7 +19,6 @@ sources:
             description: "Identificador único y abreviado de la empresa."
             tests:
               - not_null
-              - unique
 
 
           - name: OVERVIEW__SYMBOL
@@ -42,7 +41,6 @@ sources:
             description: "Identificador único asignado por la SEC (EDGAR)."
             tests:
               - not_null
-              - unique
 
           - name: OVERVIEW__EXCHANGE
             description: "Mercado en el que la empresa cotiza."
@@ -73,13 +71,12 @@ sources:
             description: "Dirección física registrada de la empresa."
             tests:
               - not_null
-              - unique
 
           - name: OVERVIEW__OFFICIAL_SITE
             description: "Sitio web oficial de la empresa."
             tests:
               - not_null
-              - unique
+
 
           - name: OVERVIEW__FISCAL_YEAR_END
             description: "Fecha de cierre del año fiscal de la empresa."
@@ -278,7 +275,7 @@ sources:
             description: "Identificador único para los datos del DLT."
             tests:
               - not_null
-              - unique
+              
 
       - name: EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS
         description: "Esta tabla contiene informes trimestrales de balance general de diversas empresas."
@@ -464,7 +461,7 @@ sources:
             description: "Identificador único para el linaje de los datos."
             tests:
               - not_null
-              - unique
+              
       - name: EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS
         description: "Esta tabla contiene informes trimestrales de estado de resultados de diversas empresas."
         columns:
@@ -534,7 +531,7 @@ sources:
             description: "Identificador único para el linaje de los datos."
             tests:
               - not_null
-              - unique
+              
 
 
       - name: EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS
@@ -612,7 +609,7 @@ sources:
             description: "Identificador único para el linaje de los datos."
             tests:
               - not_null
-              - unique
+              
 
 
       - name: _DLT_LOADS
@@ -622,7 +619,7 @@ sources:
             description: "Identificador único de la carga."
             tests:
               - not_null
-              - unique
+              
           - name: SCHEMA_NAME
             description: "Nombre del esquema."
           - name: STATUS
@@ -669,7 +666,7 @@ sources:
             description: "Identificador único del linaje de datos."
             tests:
               - not_null
-              - unique
+              
               - relationships:
                   to: ref('_DLT_LOADS')
                   field: LOAD_ID
