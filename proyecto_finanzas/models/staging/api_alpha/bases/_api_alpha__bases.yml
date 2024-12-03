@@ -110,8 +110,11 @@ models:
           description: "Número de acciones en circulación."
         - name: fecha_divid
           description: "Fecha en la que se paga el dividendo."
+
+
         - name: fecha_ex_divid
           description: "Fecha en la que una acción se negocia sin el dividendo."
+
         - name: id_carga_dlt
           description: "ID de la carga."
           tests:
@@ -284,11 +287,13 @@ models:
           description: "Fecha de la carga de datos."
           tests:
             - not_null
+            
 
         - name: fecha_fiscal_final
           description: "Fecha de finalización del período fiscal en formato de fecha."
           tests:
             - not_null
+            
 
         - name: moneda
           description: "Moneda en la que se reportan los datos financieros."
@@ -413,10 +418,12 @@ models:
           description: "Fecha de la carga."
           tests:
             - not_null
+            
         - name: fecha_fiscal_final
           description: "Fecha en la que finaliza el período fiscal."
           tests:
             - not_null
+            
         - name: moneda_reportada
           description: "Moneda en la que se reportan los datos financieros."
           tests:
@@ -507,6 +514,7 @@ models:
           description: "Fecha y hora en que se insertó la carga en UTC."
           tests:
             - not_null
+            
         - name: hash_version_esquema
           description: "Hash de la versión del esquema."
 
@@ -524,6 +532,9 @@ models:
         description: "Estado del pipeline."
       - name: fecha_de_creacion
         description: "Fecha y hora de creación en UTC."
+        tests:
+        - not_null
+        
       - name: hash_de_la_version
         description: "Hash de la versión del pipeline."
       - name: id_carga_dlt
