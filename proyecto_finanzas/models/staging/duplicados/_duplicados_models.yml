@@ -1,0 +1,337 @@
+version: 2
+
+models:
+  - name: stg_duplicados_met_actual
+    description: "Modelo que contiene las métricas actuales financieras de las empresas."
+    columns:
+      - name: id_simbolo
+        description: "Identificador del símbolo de la empresa."
+      - name: id_activo
+        description: "Identificador del activo."
+        tests:
+          - relationships:
+              to: ref('dim_activo')
+              field: id_activo
+      - name: id_bolsa
+        description: "Identificador de la bolsa."
+        tests:
+          - relationships:
+              to: ref('dim_bolsa')
+              field: id_bolsa
+      - name: id_industria
+        description: "Identificador de la industria."
+        tests:
+          - relationships:
+              to: ref('dim_industria')
+              field: id_industria
+      - name: id_sector
+        description: "Identificador del sector."
+        tests:
+          - relationships:
+              to: ref('dim_sector')
+              field: id_sector
+      - name: idx_CIK
+        description: "Identificador de la información de la empresa (CIK)."
+        tests:
+          - relationships:
+              to: ref('dim_info_empresa')
+              field: idx_CIK
+      - name: id_web
+        description: "Identificador del sitio web."
+        tests:
+          - relationships:
+              to: ref('dim_web')
+              field: id_web
+      - name: id_moneda
+        description: "Identificador de la moneda."
+        tests:
+          - relationships:
+              to: ref('dim_moneda')
+              field: id_moneda
+      - name: fin_anyo_fiscal
+        description: "Fin del año fiscal."
+      - name: ultimo_trimestre
+        description: "Último trimestre."
+      - name: capitalizacion_mercado
+        description: "Capitalización de mercado."
+      - name: ebitda
+        description: "EBITDA (Earnings Before Interest, Taxes, Depreciation, and Amortization)."
+      - name: ratio_precio_ganancia
+        description: "Ratio precio-ganancia."
+      - name: ratio_peg
+        description: "Ratio PEG (Price/Earnings to Growth)."
+      - name: valor_contable
+        description: "Valor contable."
+      - name: dividendo_por_accion
+        description: "Dividendo por acción."
+      - name: rend_div_accion_porc
+        description: "Rendimiento del dividendo por acción en porcentaje."
+      - name: ganancia_por_accion
+        description: "Ganancia por acción."
+      - name: ingresos_por_accion
+        description: "Ingresos por acción."
+      - name: margen_ganancia
+        description: "Margen de ganancia."
+      - name: margen_operativo
+        description: "Margen operativo."
+      - name: retn_sobre_activos
+        description: "Retorno sobre activos."
+      - name: retn_sobre_patri
+        description: "Retorno sobre patrimonio."
+      - name: ingresos_acci_anyo
+        description: "Ingresos por acción anual."
+      - name: beneficio_bruto
+        description: "Beneficio bruto."
+      - name: eps_diluido
+        description: "EPS diluido (Earnings Per Share)."
+      - name: crec_gana_trim
+        description: "Crecimiento de ganancias trimestral."
+      - name: crec_ingre_trim
+        description: "Crecimiento de ingresos trimestral."
+      - name: precio_obj_anali
+        description: "Precio objetivo del análisis."
+      - name: precio_ganan
+        description: "Precio de ganancia."
+      - name: precio_ganan_fut
+        description: "Precio de ganancia futura."
+      - name: rat_precio_venta
+        description: "Ratio precio-venta."
+      - name: rat_precio_valor
+        description: "Ratio precio-valor."
+      - name: valor_ingresos
+        description: "Valor de ingresos."
+      - name: valor_ebitda
+        description: "Valor de EBITDA."
+      - name: beta
+        description: "Beta."
+      - name: valor_max_sem_52
+        description: "Valor máximo en 52 semanas."
+      - name: valor_min_sem_52
+        description: "Valor mínimo en 52 semanas."
+      - name: media_movil_50_dias
+        description: "Media móvil de 50 días."
+      - name: media_movil_200_dias
+        description: "Media móvil de 200 días."
+      - name: acciones_circulando
+        description: "Acciones en circulación."
+      - name: fecha_divid
+        description: "Fecha de dividendo."
+      - name: fecha_ex_divid
+        description: "Fecha ex-dividendo."
+      - name: id_carga_dlt
+        description: "Identificador de la carga DLT."
+  
+      - name: id_raiz_dlt
+        description: "Identificador raíz DLT."
+  
+      - name: valid_from
+        description: "Fecha y hora de inicio de validez en UTC."
+
+      - name: valid_to
+        description: "Fecha y hora de fin de validez en UTC."
+
+
+    
+  - name: stg_duplicados_met_hist
+    description: "Modelo que contiene las métricas históricas financieras de las empresas."
+    columns:
+      - name: id_simbolo
+        description: "Identificador del símbolo de la empresa."
+        tests:
+          - not_null
+      - name: fecha_carga
+        description: "Fecha en la que se cargaron los datos."
+        tests:
+          - not_null
+      - name: fecha_fiscal_final
+        description: "Fecha de finalización fiscal."
+        tests:
+          - not_null
+      - name: id_metrica
+        description: "Identificador de la métrica."
+        tests:
+          - not_null
+      - name: utilidad_bruta
+        description: "Utilidad bruta de la empresa."
+      - name: ingresos_totales
+        description: "Ingresos totales de la empresa."
+      - name: costo_de_ingresos
+        description: "Costo de los ingresos."
+      - name: costo_de_bienes_y_servicios_vendidos
+        description: "Costo de bienes y servicios vendidos."
+      - name: ingreso_operativo
+        description: "Ingreso operativo de la empresa."
+      - name: gastos_generales_y_administrativos
+        description: "Gastos generales y administrativos."
+      - name: investigacion_y_desarrollo
+        description: "Gastos en investigación y desarrollo."
+      - name: gastos_operativos
+        description: "Gastos operativos."
+      - name: ingresos_por_inversion_netos
+        description: "Ingresos netos por inversiones."
+      - name: ingresos_netos_por_intereses
+        description: "Ingresos netos por intereses."
+      - name: ingresos_por_intereses
+        description: "Ingresos por intereses."
+      - name: gastos_por_intereses
+        description: "Gastos por intereses."
+      - name: ingresos_no_intereses
+        description: "Ingresos no relacionados con intereses."
+      - name: otros_ingresos_no_operativos
+        description: "Otros ingresos no operativos."
+      - name: depreciacion
+        description: "Depreciación."
+      - name: depreciacion_y_amortizacion
+        description: "Depreciación y amortización."
+      - name: ingreso_antes_de_impuestos
+        description: "Ingreso antes de impuestos."
+      - name: gastos_por_impuestos
+        description: "Gastos por impuestos."
+      - name: gastos_por_intereses_y_deudas
+        description: "Gastos por intereses y deudas."
+      - name: ingreso_neto_de_operaciones_continuas
+        description: "Ingreso neto de operaciones continuas."
+      - name: ingreso_integral_neto_de_impuestos
+        description: "Ingreso integral neto de impuestos."
+      - name: ebit
+        description: "EBIT (Earnings Before Interest and Taxes)."
+      - name: ebitda
+        description: "EBITDA (Earnings Before Interest, Taxes, Depreciation, and Amortization)."
+      - name: ingreso_neto
+        description: "Ingreso neto."
+      - name: id_padre_dlt
+        description: "Identificador del padre en el linaje de datos."
+        tests:
+          - not_null
+      - name: indice_lista_dlt
+        description: "Índice de la lista en el linaje de datos."
+        tests:
+          - not_null
+
+      - name: id_dlt
+        description: "Identificador único en el linaje de datos."
+
+      - name: flujo_efectivo_operativo
+        description: "Flujo de efectivo operativo."
+      - name: pagos_actividades_operativas
+        description: "Pagos por actividades operativas."
+      - name: ingresos_actividades_operativas
+        description: "Ingresos por actividades operativas."
+      - name: cambio_pasivos_operativos
+        description: "Cambio en pasivos operativos."
+      - name: cambio_activos_operativos
+        description: "Cambio en activos operativos."
+      - name: depreciacion_amortizacion
+        description: "Depreciación y amortización."
+      - name: gastos_capital
+        description: "Gastos de capital."
+      - name: cambio_cuentas_por_cobrar
+        description: "Cambio en cuentas por cobrar."
+      - name: cambio_inventario
+        description: "Cambio en inventario."
+      - name: ganancia_perdida
+        description: "Ganancia o pérdida."
+      - name: flujo_efectivo_inversion
+        description: "Flujo de efectivo de inversión."
+      - name: flujo_efectivo_financiamiento
+        description: "Flujo de efectivo de financiamiento."
+      - name: ingresos_reembolsos_deuda_corto_plazo
+        description: "Ingresos por reembolsos de deuda a corto plazo."
+      - name: pagos_recompra_acciones_comunes
+        description: "Pagos por recompra de acciones comunes."
+      - name: pagos_recompra_capital
+        description: "Pagos por recompra de capital."
+      - name: pagos_recompra_acciones_preferentes
+        description: "Pagos por recompra de acciones preferentes."
+      - name: pago_dividendos
+        description: "Pago de dividendos."
+      - name: pago_dividendos_acciones_comunes
+        description: "Pago de dividendos de acciones comunes."
+      - name: pago_dividendos_acciones_preferentes
+        description: "Pago de dividendos de acciones preferentes."
+      - name: ingresos_emision_acciones_comunes
+        description: "Ingresos por emisión de acciones comunes."
+      - name: ingresos_emision_deuda_largo_plazo
+        description: "Ingresos por emisión de deuda a largo plazo."
+      - name: ingresos_emision_acciones_preferentes
+        description: "Ingresos por emisión de acciones preferentes."
+      - name: ingresos_recompra_capital
+        description: "Ingresos por recompra de capital."
+      - name: ingresos_venta_acciones_tesoreria
+        description: "Ingresos por venta de acciones en tesorería."
+      - name: cambio_efectivo_equivalentes
+        description: "Cambio en efectivo y equivalentes."
+      - name: cambio_tipo_cambio
+        description: "Cambio en tipo de cambio."
+      - name: total_activos
+        description: "Total de activos."
+      - name: activos_corrientes
+        description: "Activos corrientes."
+      - name: efectivo_equivalente
+        description: "Efectivo y equivalentes."
+      - name: efectivo_inversiones_corto_plazo
+        description: "Efectivo en inversiones a corto plazo."
+      - name: inventario
+        description: "Inventario."
+      - name: cuentas_por_cobrar
+        description: "Cuentas por cobrar."
+      - name: activos_no_corrientes
+        description: "Activos no corrientes."
+      - name: propiedades
+        description: "Propiedades."
+      - name: depreciacion_acumulada
+        description: "Depreciación acumulada."
+      - name: activos_intangibles
+        description: "Activos intangibles."
+      - name: activos_intangibles_sin_plusvalia
+        description: "Activos intangibles sin plusvalía."
+      - name: plusvalia
+        description: "Plusvalía."
+      - name: inversiones
+        description: "Inversiones."
+      - name: inversiones_largo_plazo
+        description: "Inversiones a largo plazo."
+      - name: inversiones_corto_plazo
+        description: "Inversiones a corto plazo."
+      - name: otros_activos_corrientes
+        description: "Otros activos corrientes."
+      - name: otros_activos_no_corrientes
+        description: "Otros activos no corrientes."
+      - name: total_pasivos
+        description: "Total de pasivos."
+      - name: pasivos_corrientes
+        description: "Pasivos corrientes."
+      - name: cuentas_por_pagar
+        description: "Cuentas por pagar."
+      - name: ingresos_diferidos
+        description: "Ingresos diferidos."
+      - name: deuda_corriente
+        description: "Deuda corriente."
+      - name: deuda_corto_plazo
+        description: "Deuda a corto plazo."
+      - name: pasivos_no_corrientes
+        description: "Pasivos no corrientes."
+      - name: obligaciones_arrendamiento
+        description: "Obligaciones de arrendamiento."
+      - name: deuda_largo_plazo
+        description: "Deuda a largo plazo."
+      - name: deuda_corriente_largo_plazo
+        description: "Deuda corriente a largo plazo."
+      - name: deuda_no_corriente_largo_plazo
+        description: "Deuda no corriente a largo plazo."
+      - name: deuda_total
+        description: "Deuda total."
+      - name: otros_pasivos_corrientes
+        description: "Otros pasivos corrientes."
+      - name: otros_pasivos_no_corrientes
+        description: "Otros pasivos no corrientes."
+      - name: patrimonio_total
+        description: "Patrimonio total."
+      - name: acciones_tesoreria
+        description: "Acciones en tesorería."
+      - name: ganancias_retenidas
+        description: "Ganancias retenidas."
+      - name: acciones_comunes
+        description: "Acciones comunes."
+      - name: acciones_comunes_en_circulacion
+        description: "Acciones comunes en circulación."

@@ -1,0 +1,676 @@
+
+version: 2
+
+sources:
+  - name: api_alpha # Datos de la API Alphavantage
+    schema: DATOS_FINANZAS4 # schema de la base de datos
+    database: "DATOS_BRONZE_FINANZAS" # base de datos
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    tables:
+      - name: empresa_data
+        description: "Tabla de datos de finanzas de empresas"
+        columns:
+          - name: SYMBOL
+            description: "Identificador único y abreviado de la empresa."
+            tests:
+              - not_null
+
+
+          - name: OVERVIEW__SYMBOL
+            description: "Identificador único de la empresa en el resumen."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__ASSET_TYPE
+            description: "Tipo de activo financiero que representa la empresa."
+
+          - name: OVERVIEW__NAME
+            description: "Nombre oficial registrado de la empresa."
+            tests:
+              - not_null
+ 
+          - name: OVERVIEW__DESCRIPTION
+            description: "Descripción general de la empresa y sus actividades."
+
+          - name: OVERVIEW__CIK
+            description: "Identificador único asignado por la SEC (EDGAR)."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__EXCHANGE
+            description: "Mercado en el que la empresa cotiza."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__CURRENCY
+            description: "Moneda principal utilizada en los reportes financieros."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__COUNTRY
+            description: "País de registro de la empresa."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__SECTOR
+            description: "Sector económico en el que opera la empresa."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__INDUSTRY
+            description: "Industria específica dentro del sector de la empresa."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__ADDRESS
+            description: "Dirección física registrada de la empresa."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__OFFICIAL_SITE
+            description: "Sitio web oficial de la empresa."
+            tests:
+              - not_null
+
+
+          - name: OVERVIEW__FISCAL_YEAR_END
+            description: "Fecha de cierre del año fiscal de la empresa."
+            tests:
+              - not_null
+              
+
+          - name: OVERVIEW__LATEST_QUARTER
+            description: "Último trimestre fiscal reportado por la empresa."
+            tests:
+              - not_null
+              
+
+          - name: OVERVIEW__MARKET_CAPITALIZATION
+            description: "Valor total de la empresa en el mercado financiero."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__EBITDA
+            description: "Ganancias antes de intereses, impuestos, depreciación y amortización."
+            tests:
+              - not_null
+
+
+          - name: OVERVIEW__PE_RATIO
+            description: "Relación precio-ganancias de la empresa."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__PEG_RATIO
+            description: "Relación precio-ganancias ajustada al crecimiento."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__BOOK_VALUE
+            description: "Valor contable de la empresa por acción."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__DIVIDEND_PER_SHARE
+            description: "Cantidad pagada en dividendos por acción."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__DIVIDEND_YIELD
+            description: "Rendimiento porcentual de los dividendos sobre el precio de la acción."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__EPS
+            description: "Ganancias por acción reportadas por la empresa."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__REVENUE_PER_SHARE_TTM
+            description: "Ingresos generados por acción en los últimos 12 meses."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__PROFIT_MARGIN
+            description: "Margen porcentual de beneficios sobre ingresos totales."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__OPERATING_MARGIN_TTM
+            description: "Margen operativo en los últimos 12 meses."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__RETURN_ON_ASSETS_TTM
+            description: "Retorno porcentual sobre los activos en los últimos 12 meses."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__RETURN_ON_EQUITY_TTM
+            description: "Retorno porcentual sobre el patrimonio en los últimos 12 meses."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__REVENUE_TTM
+            description: "Ingresos totales generados en los últimos 12 meses."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__GROSS_PROFIT_TTM
+            description: "Beneficio bruto total en los últimos 12 meses."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__DILUTED_EPSTTM
+            description: "Ganancias diluidas por acción en los últimos 12 meses."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__QUARTERLY_EARNINGS_GROWTH_YOY
+            description: "Crecimiento porcentual de las ganancias trimestrales año contra año."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__QUARTERLY_REVENUE_GROWTH_YOY
+            description: "Crecimiento porcentual de los ingresos trimestrales año contra año."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__ANALYST_TARGET_PRICE
+            description: "Precio objetivo estimado por analistas para la acción."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__TRAILING_PE
+            description: "Relación precio/ganancias con datos históricos."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__FORWARD_PE
+            description: "Relación precio/ganancias con proyecciones futuras."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__PRICE_TO_SALES_RATIO_TTM
+            description: "Relación precio/ventas en los últimos 12 meses."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__PRICE_TO_BOOK_RATIO
+            description: "Relación precio/valor contable de la acción."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__EV_TO_REVENUE
+            description: "Valor empresarial en relación con ingresos totales."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__EV_TO_EBITDA
+            description: "Valor empresarial en relación con EBITDA."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__BETA
+            description: "Medida de volatilidad del precio de la acción respecto al mercado."
+            tests:
+              - not_null
+
+          - name: OVERVIEW___52_WEEK_HIGH
+            description: "Precio más alto alcanzado en las últimas 52 semanas."
+            tests:
+              - not_null
+
+          - name: OVERVIEW___52_WEEK_LOW
+            description: "Precio más bajo alcanzado en las últimas 52 semanas."
+            tests:
+              - not_null
+
+          - name: OVERVIEW___50_DAY_MOVING_AVERAGE
+            description: "Promedio móvil del precio de la acción en los últimos 50 días."
+            tests:
+              - not_null
+
+          - name: OVERVIEW___200_DAY_MOVING_AVERAGE
+            description: "Promedio móvil del precio de la acción en los últimos 200 días."
+            tests:
+              - not_null
+
+          - name: OVERVIEW__SHARES_OUTSTANDING
+            description: "Número total de acciones en circulación."
+            tests:
+              - not_null
+              
+
+          - name: OVERVIEW__DIVIDEND_DATE
+            description: "Fecha del pago de dividendos más reciente."
+              
+
+          - name: OVERVIEW__EX_DIVIDEND_DATE
+            description: "Fecha ex-dividendo más reciente."
+              
+
+          - name: BALANCE_SHEET__SYMBOL
+            description: "Símbolo del balance de la empresa."
+
+
+          - name: INCOME_STATEMENT__SYMBOL
+            description: "Símbolo del estado de resultados de la empresa."
+
+          - name: CASH_FLOW__SYMBOL
+            description: "Símbolo del flujo de caja de la empresa."
+
+
+          - name: _DLT_LOAD_ID
+            description: "ID de carga para los datos del DLT."
+            tests:
+              - not_null
+
+          - name: _DLT_ID
+            description: "Identificador único para los datos del DLT."
+            tests:
+              - not_null
+              
+
+      - name: EMPRESA_DATA__BALANCE_SHEET__QUARTERLY_REPORTS
+        description: "Esta tabla contiene informes trimestrales de balance general de diversas empresas."
+        columns:
+          - name: FISCAL_DATE_ENDING
+            description: "La fecha fiscal en la que termina el informe."
+            tests:
+              - not_null
+
+          - name: REPORTED_CURRENCY
+            description: "La moneda en la que está denominando el informe financiero."
+            tests:
+              - not_null
+
+          - name: TOTAL_ASSETS
+            description: "El total de activos de la empresa."
+            tests:
+              - not_null
+
+          - name: TOTAL_CURRENT_ASSETS
+            description: "El total de activos corrientes de la empresa."
+            tests:
+              - not_null
+
+          - name: CASH_AND_CASH_EQUIVALENTS_AT_CARRYING_VALUE
+            description: "Efectivo y equivalentes de efectivo a su valor contable."
+            tests:
+              - not_null
+
+          - name: CASH_AND_SHORT_TERM_INVESTMENTS
+            description: "Efectivo e inversiones a corto plazo."
+            tests:
+              - not_null
+
+          - name: INVENTORY
+            description: "Inventarios mantenidos por la empresa."
+            tests:
+              - not_null
+
+          - name: CURRENT_NET_RECEIVABLES
+            description: "Cuentas por cobrar netas corrientes."
+            tests:
+              - not_null
+
+          - name: TOTAL_NON_CURRENT_ASSETS
+            description: "El total de activos no corrientes de la empresa."
+            tests:
+              - not_null
+
+          - name: PROPERTY_PLANT_EQUIPMENT
+            description: "Valor de propiedad, planta y equipo."
+            tests:
+              - not_null
+
+          - name: ACCUMULATED_DEPRECIATION_AMORTIZATION_PPE
+            description: "Depreciación acumulada y amortización de propiedad, planta y equipo."
+            tests:
+              - not_null
+
+          - name: INTANGIBLE_ASSETS
+            description: "Activos intangibles de la empresa."
+            tests:
+              - not_null
+
+          - name: INTANGIBLE_ASSETS_EXCLUDING_GOODWILL
+            description: "Activos intangibles excluyendo el goodwill."
+            tests:
+              - not_null
+
+          - name: GOODWILL
+            description: "Valor del goodwill de la empresa."
+            tests:
+              - not_null
+
+          - name: INVESTMENTS
+            description: "Inversiones mantenidas por la empresa."
+            tests:
+              - not_null
+
+          - name: LONG_TERM_INVESTMENTS
+            description: "Inversiones a largo plazo."
+            tests:
+              - not_null
+            
+          - name: SHORT_TERM_INVESTMENTS
+            description: "Inversiones a corto plazo."
+            tests:
+              - not_null
+
+          - name: OTHER_CURRENT_ASSETS
+            description: "Otros activos corrientes."
+            tests:
+              - not_null
+
+          - name: OTHER_NON_CURRENT_ASSETS
+            description: "Otros activos no corrientes."
+            tests:
+              - not_null
+
+          - name: TOTAL_LIABILITIES
+            description: "El total de pasivos de la empresa."
+            tests:
+              - not_null
+
+          - name: TOTAL_CURRENT_LIABILITIES
+            description: "El total de pasivos corrientes."
+            tests:
+              - not_null
+
+          - name: CURRENT_ACCOUNTS_PAYABLE
+            description: "Cuentas por pagar."
+            tests:
+              - not_null
+
+          - name: DEFERRED_REVENUE
+            description: "Ingresos diferidos de la empresa."
+            tests:
+              - not_null
+
+          - name: CURRENT_DEBT
+            description: "Deuda corriente."
+            tests:
+              - not_null
+
+          - name: SHORT_TERM_DEBT
+            description: "Deuda a corto plazo."
+            tests:
+              - not_null
+
+          - name: TOTAL_NON_CURRENT_LIABILITIES
+            description: "El total de pasivos no corrientes."
+            tests:
+              - not_null
+
+          - name: CAPITAL_LEASE_OBLIGATIONS
+            description: "Obligaciones de arrendamiento financiero."
+
+          - name: LONG_TERM_DEBT
+            description: "Deuda a largo plazo."
+
+          - name: CURRENT_LONG_TERM_DEBT
+            description: "Deuda a largo plazo corriente."
+
+          - name: LONG_TERM_DEBT_NONCURRENT
+            description: "Deuda a largo plazo no corriente."
+
+          - name: SHORT_LONG_TERM_DEBT_TOTAL
+            description: "Total de deuda a corto y largo plazo."
+
+          - name: OTHER_CURRENT_LIABILITIES
+            description: "Otros pasivos corrientes."
+
+          - name: OTHER_NON_CURRENT_LIABILITIES
+            description: "Otros pasivos no corrientes."
+
+          - name: TOTAL_SHAREHOLDER_EQUITY
+            description: "Total de patrimonio de los accionistas."
+
+          - name: TREASURY_STOCK
+            description: "Valor de las acciones en tesorería."
+
+          - name: RETAINED_EARNINGS
+            description: "Utilidades retenidas."
+
+          - name: COMMON_STOCK
+            description: "Acciones comunes."
+
+          - name: COMMON_STOCK_SHARES_OUTSTANDING
+            description: "Acciones comunes en circulación."
+
+                  
+          - name: _DLT_PARENT_ID
+            description: "Identificador padre para el linaje de los datos."
+            tests:
+              - not_null
+
+          - name: _DLT_LIST_IDX
+            description: "Índice para la lista de registros en el linaje de los datos."
+            tests:
+              - not_null
+
+          - name: _DLT_ID
+            description: "Identificador único para el linaje de los datos."
+            tests:
+              - not_null
+              
+      - name: EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS
+        description: "Esta tabla contiene informes trimestrales de estado de resultados de diversas empresas."
+        columns:
+          - name: FISCAL_DATE_ENDING
+            description: "La fecha fiscal en la que termina el informe."
+          - name: REPORTED_CURRENCY
+            description: "La moneda en la que está denominando el informe financiero."
+          - name: GROSS_PROFIT
+            description: "Ganancia bruta de la empresa."
+          - name: TOTAL_REVENUE
+            description: "Ingreso total de la empresa."
+          - name: COST_OF_REVENUE
+            description: "Costo de los ingresos."
+          - name: COSTOF_GOODS_AND_SERVICES_SOLD
+            description: "Costo de bienes y servicios vendidos."
+          - name: OPERATING_INCOME
+            description: "Ingreso operativo de la empresa."
+          - name: SELLING_GENERAL_AND_ADMINISTRATIVE
+            description: "Gastos de venta, generales y administrativos."
+          - name: RESEARCH_AND_DEVELOPMENT
+            description: "Gastos de investigación y desarrollo."
+          - name: OPERATING_EXPENSES
+            description: "Gastos operativos."
+          - name: INVESTMENT_INCOME_NET
+            description: "Ingreso neto por inversiones."
+          - name: NET_INTEREST_INCOME
+            description: "Ingreso neto por intereses."
+          - name: INTEREST_INCOME
+            description: "Ingreso por intereses."
+          - name: INTEREST_EXPENSE
+            description: "Gasto por intereses."
+          - name: NON_INTEREST_INCOME
+            description: "Ingreso no relacionado con intereses."
+          - name: OTHER_NON_OPERATING_INCOME
+            description: "Otros ingresos no operativos."
+          - name: DEPRECIATION
+            description: "Depreciación."
+          - name: DEPRECIATION_AND_AMORTIZATION
+            description: "Depreciación y amortización."
+          - name: INCOME_BEFORE_TAX
+            description: "Ingreso antes de impuestos."
+          - name: INCOME_TAX_EXPENSE
+            description: "Gasto por impuestos sobre la renta."
+          - name: INTEREST_AND_DEBT_EXPENSE
+            description: "Gastos por intereses y deuda."
+          - name: NET_INCOME_FROM_CONTINUING_OPERATIONS
+            description: "Ingreso neto de operaciones continuas."
+          - name: COMPREHENSIVE_INCOME_NET_OF_TAX
+            description: "Ingreso integral neto después de impuestos."
+          - name: EBIT
+            description: "Beneficio antes de intereses e impuestos (EBIT)."
+          - name: EBITDA
+            description: "Beneficio antes de intereses, impuestos, depreciación y amortización (EBITDA)."
+          - name: NET_INCOME
+            description: "Ingreso neto de la empresa."
+
+
+          - name: _DLT_PARENT_ID
+            description: "Identificador padre para el linaje de los datos."
+            tests:
+              - not_null
+          - name: _DLT_LIST_IDX
+            description: "Índice para la lista de registros en el linaje de los datos."
+            tests:
+              - not_null
+          - name: _DLT_ID
+            description: "Identificador único para el linaje de los datos."
+            tests:
+              - not_null
+              
+
+
+      - name: EMPRESA_DATA__CASH_FLOW__QUARTERLY_REPORTS
+        description: "Reporte trimestral de flujo de caja de la empresa."
+        columns:
+          - name: FISCAL_DATE_ENDING
+            description: "Fecha de finalización fiscal."
+          - name: REPORTED_CURRENCY
+            description: "Moneda reportada."
+          - name: OPERATING_CASHFLOW
+            description: "Flujo de caja operativo."
+          - name: PAYMENTS_FOR_OPERATING_ACTIVITIES
+            description: "Pagos por actividades operativas."
+          - name: PROCEEDS_FROM_OPERATING_ACTIVITIES
+            description: "Ingresos por actividades operativas."
+          - name: CHANGE_IN_OPERATING_LIABILITIES
+            description: "Cambio en pasivos operativos."
+          - name: CHANGE_IN_OPERATING_ASSETS
+            description: "Cambio en activos operativos."
+          - name: DEPRECIATION_DEPLETION_AND_AMORTIZATION
+            description: "Depreciación, agotamiento y amortización."
+          - name: CAPITAL_EXPENDITURES
+            description: "Gastos de capital."
+          - name: CHANGE_IN_RECEIVABLES
+            description: "Cambio en cuentas por cobrar."
+          - name: CHANGE_IN_INVENTORY
+            description: "Cambio en inventario."
+          - name: PROFIT_LOSS
+            description: "Ganancia/Pérdida."
+          - name: CASHFLOW_FROM_INVESTMENT
+            description: "Flujo de caja de inversión."
+          - name: CASHFLOW_FROM_FINANCING
+            description: "Flujo de caja de financiamiento."
+          - name: PROCEEDS_FROM_REPAYMENTS_OF_SHORT_TERM_DEBT
+            description: "Ingresos por pagos de deuda a corto plazo."
+          - name: PAYMENTS_FOR_REPURCHASE_OF_COMMON_STOCK
+            description: "Pagos por recompra de acciones comunes."
+          - name: PAYMENTS_FOR_REPURCHASE_OF_EQUITY
+            description: "Pagos por recompra de capital."
+          - name: PAYMENTS_FOR_REPURCHASE_OF_PREFERRED_STOCK
+            description: "Pagos por recompra de acciones preferentes."
+          - name: DIVIDEND_PAYOUT
+            description: "Pago de dividendos."
+          - name: DIVIDEND_PAYOUT_COMMON_STOCK
+            description: "Pago de dividendos de acciones comunes."
+          - name: DIVIDEND_PAYOUT_PREFERRED_STOCK
+            description: "Pago de dividendos de acciones preferentes."
+          - name: PROCEEDS_FROM_ISSUANCE_OF_COMMON_STOCK
+            description: "Ingresos por emisión de acciones comunes."
+          - name: PROCEEDS_FROM_ISSUANCE_OF_LONG_TERM_DEBT_AND_CAPITAL_SECURITIES_NET
+            description: "Ingresos por emisión de deuda a largo plazo y valores de capital netos."
+          - name: PROCEEDS_FROM_ISSUANCE_OF_PREFERRED_STOCK
+            description: "Ingresos por emisión de acciones preferentes."
+          - name: PROCEEDS_FROM_REPURCHASE_OF_EQUITY
+            description: "Ingresos por recompra de capital."
+          - name: PROCEEDS_FROM_SALE_OF_TREASURY_STOCK
+            description: "Ingresos por venta de acciones en tesorería."
+          - name: CHANGE_IN_CASH_AND_CASH_EQUIVALENTS
+            description: "Cambio en efectivo y equivalentes de efectivo."
+          - name: CHANGE_IN_EXCHANGE_RATE
+            description: "Cambio en la tasa de cambio."
+          - name: NET_INCOME
+            description: "Ingreso neto."
+
+
+          - name: _DLT_PARENT_ID
+            description: "Identificador padre para el linaje de los datos."
+            tests:
+              - not_null
+          - name: _DLT_LIST_IDX
+            description: "Índice para la lista de registros en el linaje de los datos."
+            tests:
+              - not_null
+          - name: _DLT_ID
+            description: "Identificador único para el linaje de los datos."
+            tests:
+              - not_null
+              
+
+
+      - name: _DLT_LOADS
+        description: "Tabla que contiene información sobre las cargas de datos."
+        columns:
+          - name: LOAD_ID
+            description: "Identificador único de la carga."
+            tests:
+              - not_null
+              
+          - name: SCHEMA_NAME
+            description: "Nombre del esquema."
+          - name: STATUS
+            description: "Estado de la carga."
+            tests:
+              - not_null
+          - name: INSERTED_AT
+            description: "Fecha y hora de inserción."
+            
+          - name: SCHEMA_VERSION_HASH
+            description: "Hash de la versión del esquema."
+
+
+      - name: _DLT_PIPELINE_STATE
+        description: "Tabla que contiene el estado del pipeline de datos."
+        columns:
+          - name: VERSION
+            description: "Versión del pipeline."
+            tests:
+              - not_null
+          - name: ENGINE_VERSION
+            description: "Versión del motor."
+            tests:
+              - not_null
+          - name: PIPELINE_NAME
+            description: "Nombre del pipeline."
+            tests:
+              - not_null
+          - name: STATE
+            description: "Estado del pipeline."
+            tests:
+              - not_null
+          - name: CREATED_AT
+            description: "Fecha y hora de creación."
+            tests:
+              - not_null
+          - name: VERSION_HASH
+            description: "Hash de la versión."
+          - name: _DLT_LOAD_ID
+            description: "Identificador de la carga de datos."
+            tests:
+              - not_null
+          - name: _DLT_ID
+            description: "Identificador único del linaje de datos."
+            tests:
+              - not_null
+              
+              - relationships:
+                  to: ref('_DLT_LOADS')
+                  field: LOAD_ID
+                    
+
+
+
