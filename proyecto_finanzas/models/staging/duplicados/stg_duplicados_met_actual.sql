@@ -55,17 +55,8 @@ SELECT
   CONVERT_TIMEZONE('UTC', dbt_valid_to) AS valid_to
 
 FROM source
-
-), deduplicate_cte as (
-{{ dbt_utils.deduplicate(
-    relation='source',
-    partition_by='id_simbolo, id_carga_dlt',
-    order_by='dbt_valid_from desc',
-   )
-}}
+qualify row_number() over(partition by id_simbolo order by valid_from desc) > 1
 
 )
 
-SELECT
-  *
-FROM deduplicate_cte
+select * from renamed

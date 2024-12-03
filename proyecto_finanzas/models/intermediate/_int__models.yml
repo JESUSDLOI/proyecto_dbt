@@ -12,16 +12,12 @@ models:
         description: "Número de países donde la empresa tiene presencia."
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_pais_hist')
-              field: id_pais_hist
+
       - name: num_webs
         description: "Número de sitios web de la empresa."
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_web_hist')
-              field: id_web_hist
+ 
       - name: fecha_trimestre
         description: "Fecha del trimestre."
         tests:

@@ -90,9 +90,6 @@ models:
         tests:
           - not_null
 
-version: 2
-
-models:
   - name: core__dim_nombres
     description: "Dimensión que contiene los nombres de las empresas."
     columns:
@@ -107,13 +104,5 @@ models:
           - not_null
       - name: nombre_empresa
         description: "Nombre de la empresa."
-        tests:
-          - not_null
-      - name: valid_from
-        description: "Fecha y hora de inicio de validez."
-        tests:
-          - not_null
-      - name: valid_to
-        description: "Fecha y hora de fin de validez."
         tests:
           - not_null

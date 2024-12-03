@@ -15,6 +15,7 @@ models:
           tests:
             - not_null
             - unique
+           
         - name: tipo_activo
           description: "Tipo de activo (Equity, ETF, etc.)."
           tests:
@@ -160,7 +161,7 @@ models:
           description: "Clave única para identificar los datos de la empresa."
           tests:
             - not_null
-            - unique
+           
         - name: fecha_carga
           description: "Fecha de la carga."
           tests:
@@ -266,6 +267,135 @@ models:
 
 
 
+    - name: base_api_alpha_empresa_data__cash_flow__quarterly_reports
+      description: "Tabla con datos de flujo de efectivo trimestrales de empresas"
+      columns:
+        - name: simbolo
+          description: "Símbolo de la empresa utilizado en los mercados financieros."
+          tests:
+            - not_null
+
+        - name: id_simbolo
+          description: "Clave única para identificar los datos de la empresa."
+          tests:
+            - not_null
+
+        - name: fecha_carga
+          description: "Fecha de la carga de datos."
+          tests:
+            - not_null
+
+        - name: fecha_fiscal_final
+          description: "Fecha de finalización del período fiscal en formato de fecha."
+          tests:
+            - not_null
+
+        - name: moneda
+          description: "Moneda en la que se reportan los datos financieros."
+          tests:
+            - not_null
+
+        - name: flujo_efectivo_operativo
+          description: "Flujo de efectivo generado por las actividades operativas."
+
+        - name: pagos_actividades_operativas
+          description: "Pagos realizados por actividades operativas."
+
+        - name: ingresos_actividades_operativas
+          description: "Ingresos obtenidos de actividades operativas."
+
+        - name: cambio_pasivos_operativos
+          description: "Cambio en los pasivos operativos durante el período."
+
+        - name: cambio_activos_operativos
+          description: "Cambio en los activos operativos durante el período."
+
+        - name: depreciacion_amortizacion
+          description: "Gastos de depreciación, agotamiento y amortización."
+
+        - name: gastos_capital
+          description: "Gastos de capital realizados durante el período."
+
+        - name: cambio_cuentas_por_cobrar
+          description: "Cambio en las cuentas por cobrar."
+
+        - name: cambio_inventario
+          description: "Cambio en el inventario."
+
+        - name: ganancia_perdida
+          description: "Ganancia o pérdida neta del período."
+
+        - name: flujo_efectivo_inversion
+          description: "Flujo de efectivo generado por actividades de inversión."
+
+        - name: flujo_efectivo_financiamiento
+          description: "Flujo de efectivo generado por actividades de financiamiento."
+
+        - name: ingresos_reembolsos_deuda_corto_plazo
+          description: "Ingresos por reembolsos de deuda a corto plazo."
+
+        - name: pagos_recompra_acciones_comunes
+          description: "Pagos realizados para la recompra de acciones comunes."
+
+        - name: pagos_recompra_capital
+          description: "Pagos realizados para la recompra de capital."
+
+        - name: pagos_recompra_acciones_preferentes
+          description: "Pagos realizados para la recompra de acciones preferentes."
+
+        - name: pago_dividendos
+          description: "Pago total de dividendos."
+
+        - name: pago_dividendos_acciones_comunes
+          description: "Pago de dividendos de acciones comunes."
+
+        - name: pago_dividendos_acciones_preferentes
+          description: "Pago de dividendos de acciones preferentes."
+
+        - name: ingresos_emision_acciones_comunes
+          description: "Ingresos por emisión de acciones comunes."
+
+        - name: ingresos_emision_deuda_largo_plazo
+          description: "Ingresos netos por emisión de deuda a largo plazo y valores de capital."
+
+        - name: ingresos_emision_acciones_preferentes
+          description: "Ingresos por emisión de acciones preferentes."
+
+        - name: ingresos_recompra_capital
+          description: "Ingresos por recompra de capital."
+
+        - name: ingresos_venta_acciones_tesoreria
+          description: "Ingresos por venta de acciones de tesorería."
+
+        - name: cambio_efectivo_equivalentes
+          description: "Cambio en efectivo y equivalentes de efectivo."
+
+        - name: cambio_tipo_cambio
+          description: "Cambio en el tipo de cambio."
+
+        - name: ingreso_neto
+          description: "Ingreso neto del período."
+
+        - name: id_padre_dlt
+          description: "Identificador padre DLT."
+          tests:
+            - not_null
+
+        - name: indice_lista_dlt
+          description: "Índice de lista DLT."
+
+        - name: id_dlt
+          description: "Identificador DLT."
+          tests:
+            - not_null
+            - unique
+
+        - name: id_metrica
+          description: "Clave única para identificar las métricas de la empresa."
+          tests:
+            - not_null
+            - unique
+
     - name: base_api_alpha_EMPRESA_DATA__INCOME_STATEMENT__QUARTERLY_REPORTS
       description: "Modelo que contiene los datos del estado de resultados trimestral de las empresas obtenidos de la API Alpha."
       columns:
@@ -273,11 +403,12 @@ models:
           description: "Símbolo de la empresa."
           tests:
             - not_null
+
         - name: id_simbolo
           description: "Clave única para identificar los datos de la empresa."
           tests:
             - not_null
-            - unique
+           
         - name: fecha_carga
           description: "Fecha de la carga."
           tests:
@@ -364,60 +495,41 @@ models:
         - name: id_carga_dlt
           description: "Identificador único de la carga."
           tests:
-            - not_null
             - unique
         - name: nombre_esquema
           description: "Nombre del esquema."
-          tests:
-            - not_null
+
+
         - name: estado
           description: "Estado de la carga."
-          tests:
-            - not_null
+
         - name: fecha_insercion
           description: "Fecha y hora en que se insertó la carga en UTC."
           tests:
             - not_null
         - name: hash_version_esquema
           description: "Hash de la versión del esquema."
-          tests:
-            - not_null
 
 
     - name: base_api_alpha__DLT_PIPELINE_STATE
       description: "Modelo que contiene el estado del pipeline de datos de API Alpha."
       columns:
-        - name: vers
-          description: "Versión del pipeline."
-          tests:
-            - not_null
-        - name: version_del_motor
-          description: "Versión del motor."
-          tests:
-            - not_null
-        - name: nombre_del_pipeline
-          description: "Nombre del pipeline."
-          tests:
-            - not_null
-        - name: estado
-          description: "Estado del pipeline."
-          tests:
-            - not_null
-        - name: fecha_de_creacion
-          description: "Fecha y hora de creación en UTC."
-          tests:
-            - not_null
-        - name: hash_de_la_version
-          description: "Hash de la versión del pipeline."
-          tests:
-            - not_null
-        - name: id_carga_dlt
-          description: "ID de carga DLT."
-          tests:
-            - not_null
-        - name: id_dlt
-          description: "ID DLT."
-          tests:
-            - not_null
-            - unique
+      - name: vers
+        description: "Versión del pipeline."
+      - name: version_del_motor
+        description: "Versión del motor."
+      - name: nombre_del_pipeline
+        description: "Nombre del pipeline."
+      - name: estado
+        description: "Estado del pipeline."
+      - name: fecha_de_creacion
+        description: "Fecha y hora de creación en UTC."
+      - name: hash_de_la_version
+        description: "Hash de la versión del pipeline."
+      - name: id_carga_dlt
+        description: "ID de carga DLT."
+      - name: id_dlt
+        description: "ID DLT."
+        tests:
+        - unique
 

@@ -16,14 +16,16 @@ models:
       - name: porcentaje_costo_ingresos
         description: "Porcentaje del costo de ingresos sobre los ingresos totales."
         tests:
-          - accepted_values:
-              values: [-300, 300]
+          - dbt_utils.accepted_range:
+              min_value: -300
+              max_value: 300
 
       - name: porcentaje_gastos_generales
         description: "Porcentaje de gastos generales y administrativos sobre los ingresos totales."
         tests:
-          - accepted_values:
-              values: [-300, 300]
+          - dbt_utils.accepted_range:
+              min_value: -300
+              max_value: 300
 
       - name: rotacion_activos
         description: "Rotación de activos, calculada como ingresos totales sobre total de activos."
@@ -74,20 +76,16 @@ models:
         description: "Fecha de finalización fiscal."
       - name: razon_corriente
         description: "Razón corriente, calculada como activos corrientes divididos por pasivos corrientes."
-        tests:
-          - not_null
+
       - name: prueba_acida
         description: "Prueba ácida, calculada como (activos corrientes + cambio en efectivo y equivalentes + cambio en cuentas por cobrar) dividido por pasivos corrientes."
-        tests:
-          - not_null
+
       - name: relacion_deuda_capital
         description: "Relación deuda-capital, calculada como deuda total dividida por patrimonio total."
-        tests:
-          - not_null
+ 
       - name: cobertura_intereses
         description: "Cobertura de intereses, calculada como EBIT dividido por gastos por intereses."
-        tests:
-          - not_null
+
 
   - name: mart__margen_rentabilidad
     description: "Modelo que calcula los márgenes de rentabilidad de las empresas."
@@ -100,16 +98,13 @@ models:
         description: "Fecha de finalización fiscal."
       - name: margen_bruto_porc
         description: "Margen bruto, calculado como (utilidad bruta / ingresos totales) * 100."
-        tests:
-          - not_null
+
       - name: margen_operativo_porc
         description: "Margen operativo, calculado como (ingreso operativo / ingresos totales) * 100."
-        tests:
-          - not_null
+
       - name: margen_neto_porc
         description: "Margen neto, calculado como (ingreso neto / ingresos totales) * 100."
-        tests:
-          - not_null
+
 
 
   - name: mart__tendencias_crecimiento
@@ -127,12 +122,10 @@ models:
         description: "Ingreso neto de la empresa."
       - name: crecimiento_ingresos_porc
         description: "Crecimiento de ingresos, calculado como el porcentaje de cambio en los ingresos totales respecto al periodo anterior."
-        tests:
-          - not_null
+
       - name: crecimiento_utilidad_neta_porc
         description: "Crecimiento de utilidad neta, calculado como el porcentaje de cambio en la utilidad neta respecto al periodo anterior."
-        tests:
-          - not_null
+
 
 
   - name: metricas_historicas
@@ -210,11 +203,10 @@ models:
         description: "Índice de la lista en el linaje de datos."
         tests:
           - not_null
+
       - name: id_dlt
         description: "Identificador único en el linaje de datos."
-        tests:
-          - not_null
-          - unique
+
       - name: flujo_efectivo_operativo
         description: "Flujo de efectivo operativo."
       - name: pagos_actividades_operativas

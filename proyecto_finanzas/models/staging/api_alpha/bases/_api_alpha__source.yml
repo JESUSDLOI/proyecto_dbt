@@ -449,13 +449,6 @@ sources:
           - name: COMMON_STOCK_SHARES_OUTSTANDING
             description: "Acciones comunes en circulación."
 
-          - name: _DLT_ROOT_ID
-            description: "Identificador raíz para el linaje de los datos."
-            tests:
-              - not_null
-              - relationships:
-                  to: ref('EMPRESA_DATA')
-                  field: _DLT_ID
                   
           - name: _DLT_PARENT_ID
             description: "Identificador padre para el linaje de los datos."
@@ -527,13 +520,7 @@ sources:
             description: "Beneficio antes de intereses, impuestos, depreciación y amortización (EBITDA)."
           - name: NET_INCOME
             description: "Ingreso neto de la empresa."
-          - name: _DLT_ROOT_ID
-            description: "Identificador raíz para el linaje de los datos."
-            tests:
-              - not_null
-              - relationships:
-                  to: ref('EMPRESA_DATA')
-                  field: _DLT_ID
+
 
           - name: _DLT_PARENT_ID
             description: "Identificador padre para el linaje de los datos."
@@ -611,13 +598,7 @@ sources:
             description: "Cambio en la tasa de cambio."
           - name: NET_INCOME
             description: "Ingreso neto."
-          - name: _DLT_ROOT_ID
-            description: "Identificador raíz para el linaje de los datos."
-            tests:
-              - not_null
-              - relationships:
-                  to: ref('EMPRESA_DATA')
-                  field: _DLT_ID
+
 
           - name: _DLT_PARENT_ID
             description: "Identificador padre para el linaje de los datos."

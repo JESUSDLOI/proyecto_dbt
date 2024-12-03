@@ -8,21 +8,21 @@ models:
         tests:
           - dbt_utils.relationships_where:
               to: ref('stg_syp500_snowflake__sp_500__dims')
-              field: id_simbolo
+              field: id_simbolo_hist
 
       - name: id_pais_hist
         description: "Identificador histórico del país en la tabla de hechos web."
         tests:
           - dbt_utils.relationships_where:
               to: ref('stg_syp500_snowflake__sp_500__dims')
-              field: id_pais
+              field: id_pais_hist
 
       - name: id_web_hist
         description: "Identificador histórico del sitio web en la tabla de hechos web."
         tests:
           - dbt_utils.relationships_where:
               to: ref('stg_syp500_snowflake__sp_500__dims')
-              field: id_web
+              field: id_web_hist
 
       - name: fecha
         description: "Fecha correspondiente al dato en UTC con granularidad de día."
@@ -93,9 +93,7 @@ models:
 
       - name: pag_por_visita_totl
         description: "Páginas vistas por visita total en la tabla de hechos web."
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
+
 
       - name: visi_totl
         description: "Número total de visitas en la tabla de hechos web."

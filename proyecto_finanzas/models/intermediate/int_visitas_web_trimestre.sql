@@ -9,8 +9,8 @@ WITH source AS (
     SELECT 
     
         id_simbolo_hist,
-        count(DISTINCT id_pais_hist) as num_paises,
-        count(DISTINCT id_web_hist) as num_webs,
+        cast(count(DISTINCT id_pais_hist)as int) as num_paises,
+        cast(count(DISTINCT id_web_hist) as int) as num_webs,
         fecha_trimestre,
         SUM(dura_prom_visi_escri) AS dura_prom_visi_escri_qurtr,
         SUM(tasa_rebote_escri) AS tasa_rebote_escri_qurtr,

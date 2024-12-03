@@ -1,154 +1,138 @@
 version: 2
 
 models:
-  - name: stg_api_alpha__dims_empresas
-    description: "Tabla de datos de finanzas de empresas"
+  - name: stg_duplicados_met_actual
+    description: "Modelo que contiene las métricas actuales financieras de las empresas."
     columns:
-      - name: idx_CIK
-        description: "Índice de Clasificación de la Comisión de Bolsa y Valores (CIK) que identifica de manera única a las empresas registradas en la SEC."
-
-      - name: direccion
-        description: "Dirección física de la sede principal de la empresa, incluyendo calle, número, ciudad, estado y código postal."
-
-      - name: descripcion
-        description: "Descripción detallada de la empresa, incluyendo su misión, visión, productos y servicios ofrecidos."
-
-      - name: traduccion
-        description: "Traducción de la descripción de la empresa al español para facilitar la comprensión en mercados hispanohablantes."
-        
-      - name: ambito_neg1
-        description: "Primer ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
-        tests:
-          - max_tres_pala:
-              config:
-                severity: warn
-
-      - name: ambito_neg2
-        description: "Segundo ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
-        tests:
-          - max_tres_pala:
-              config:
-                severity: warn
-
-      - name: ambito_neg3
-        description: "Tercer ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
-        tests:
-          - max_tres_pala:
-              config:
-                severity: warn
-          
-
-      - name: ambito_neg4
-        description: "Cuarto ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
-        tests:
-          - max_tres_pala:
-              config:
-                severity: warn
-
-      - name: ambito_neg5
-        description: "Quinto ámbito de negocio extraído de la respuesta de Cortex. Se espera un máximo de tres palabras; si no, se genera una advertencia."
-        tests:
-          - max_tres_pala:
-              config:
-                severity: warn
-
       - name: id_simbolo
-        description: "Identificador único del símbolo bursátil de la empresa."
-
-      - name: simbolo
-        description: "Símbolo bursátil de la empresa utilizado en los mercados financieros."
-
-      - name: nombre_empresa
-        description: "Nombre oficial de la empresa."
-        tests:
-          - not_null
-
-      - name: id_web
-        description: "Clave única para identificar los datos del sitio web de la empresa."
-        tests:
-          - not_null
-
-      - name: sitio_web
-        description: "URL del sitio web oficial de la empresa."
-
-      - name: tipo_activo
-        description: "Tipo de activo de la empresa, como acciones, bonos, etc."
-
+        description: "Identificador del símbolo de la empresa."
       - name: id_activo
-        description: "Clave única para identificar los datos del tipo de activo de la empresa."
+        description: "Identificador del activo."
         tests:
-          - not_null
-
-      - name: sector
-        description: "Sector económico en el que opera la empresa, como tecnología, salud, finanzas, etc."
-
-      - name: id_sector
-        description: "Clave única para identificar los datos del sector económico de la empresa."
-        tests:
-          - not_null
-
-      - name: industria
-        description: "Industria específica dentro del sector económico en la que opera la empresa."
-
-      - name: id_industria
-        description: "Clave única para identificar los datos de la industria específica de la empresa."
-        tests:
-          - not_null
-
-      - name: bolsa
-        description: "Bolsa de valores en la que cotiza la empresa, como NYSE, NASDAQ, etc."
-
+          - relationships:
+              to: ref('dim_activo')
+              field: id_activo
       - name: id_bolsa
-        description: "Clave única para identificar los datos de la bolsa de valores en la que cotiza la empresa."
+        description: "Identificador de la bolsa."
         tests:
-          - not_null
-
-      - name: moneda
-        description: "Moneda en la que opera la empresa, como USD, EUR, etc."
-
+          - relationships:
+              to: ref('dim_bolsa')
+              field: id_bolsa
+      - name: id_industria
+        description: "Identificador de la industria."
+        tests:
+          - relationships:
+              to: ref('dim_industria')
+              field: id_industria
+      - name: id_sector
+        description: "Identificador del sector."
+        tests:
+          - relationships:
+              to: ref('dim_sector')
+              field: id_sector
+      - name: idx_CIK
+        description: "Identificador de la información de la empresa (CIK)."
+        tests:
+          - relationships:
+              to: ref('dim_info_empresa')
+              field: idx_CIK
+      - name: id_web
+        description: "Identificador del sitio web."
+        tests:
+          - relationships:
+              to: ref('dim_web')
+              field: id_web
       - name: id_moneda
-        description: "Clave única para identificar los datos de la moneda en la que opera la empresa."
+        description: "Identificador de la moneda."
         tests:
-          - not_null
-
-      - name: id_pais
-        description: "Clave única para identificar los datos del país en el que está registrada la empresa."
-        tests:
-          - not_null
-
-      - name: pais
-        description: "País en el que está registrada la empresa."
-
-      - name: id_raiz_dlt
-        description: "Identificador único del linaje de datos (DLT) que rastrea el origen y las transformaciones de los datos."
-        tests:
-          - not_null
-          - unique
-
-      - name: fecha_insercion
-        description: "Fecha en la que se insertó el registro en la base de datos."
-        tests:
-          - not_null
-          - fecha_inferior_actual
-
-
-  - name: stg_metadata_dlt
-    description: "Tabla con datos de carga y metadatos de procesamiento"
-    columns:
-
+          - relationships:
+              to: ref('dim_moneda')
+              field: id_moneda
+      - name: fin_anyo_fiscal
+        description: "Fin del año fiscal."
+      - name: ultimo_trimestre
+        description: "Último trimestre."
+      - name: capitalizacion_mercado
+        description: "Capitalización de mercado."
+      - name: ebitda
+        description: "EBITDA (Earnings Before Interest, Taxes, Depreciation, and Amortization)."
+      - name: ratio_precio_ganancia
+        description: "Ratio precio-ganancia."
+      - name: ratio_peg
+        description: "Ratio PEG (Price/Earnings to Growth)."
+      - name: valor_contable
+        description: "Valor contable."
+      - name: dividendo_por_accion
+        description: "Dividendo por acción."
+      - name: rend_div_accion_porc
+        description: "Rendimiento del dividendo por acción en porcentaje."
+      - name: ganancia_por_accion
+        description: "Ganancia por acción."
+      - name: ingresos_por_accion
+        description: "Ingresos por acción."
+      - name: margen_ganancia
+        description: "Margen de ganancia."
+      - name: margen_operativo
+        description: "Margen operativo."
+      - name: retn_sobre_activos
+        description: "Retorno sobre activos."
+      - name: retn_sobre_patri
+        description: "Retorno sobre patrimonio."
+      - name: ingresos_acci_anyo
+        description: "Ingresos por acción anual."
+      - name: beneficio_bruto
+        description: "Beneficio bruto."
+      - name: eps_diluido
+        description: "EPS diluido (Earnings Per Share)."
+      - name: crec_gana_trim
+        description: "Crecimiento de ganancias trimestral."
+      - name: crec_ingre_trim
+        description: "Crecimiento de ingresos trimestral."
+      - name: precio_obj_anali
+        description: "Precio objetivo del análisis."
+      - name: precio_ganan
+        description: "Precio de ganancia."
+      - name: precio_ganan_fut
+        description: "Precio de ganancia futura."
+      - name: rat_precio_venta
+        description: "Ratio precio-venta."
+      - name: rat_precio_valor
+        description: "Ratio precio-valor."
+      - name: valor_ingresos
+        description: "Valor de ingresos."
+      - name: valor_ebitda
+        description: "Valor de EBITDA."
+      - name: beta
+        description: "Beta."
+      - name: valor_max_sem_52
+        description: "Valor máximo en 52 semanas."
+      - name: valor_min_sem_52
+        description: "Valor mínimo en 52 semanas."
+      - name: media_movil_50_dias
+        description: "Media móvil de 50 días."
+      - name: media_movil_200_dias
+        description: "Media móvil de 200 días."
+      - name: acciones_circulando
+        description: "Acciones en circulación."
+      - name: fecha_divid
+        description: "Fecha de dividendo."
+      - name: fecha_ex_divid
+        description: "Fecha ex-dividendo."
       - name: id_carga_dlt
-        description: "Identificador único del registro en el sistema DLT."
-        tests:
-          - not_null
-          - unique
+        description: "Identificador de la carga DLT."
+  
+      - name: id_raiz_dlt
+        description: "Identificador raíz DLT."
+  
+      - name: valid_from
+        description: "Fecha y hora de inicio de validez en UTC."
 
-      - name: fecha_insercion
-        description: "Fecha en la que se insertó el registro en la base de datos."
-        tests:
-          - not_null
-          - fecha_inferior_actual
+      - name: valid_to
+        description: "Fecha y hora de fin de validez en UTC."
 
-  - name: stg_metricas_historicas
+
+    
+  - name: stg_duplicados_met_hist
     description: "Modelo que contiene las métricas históricas financieras de las empresas."
     columns:
       - name: id_simbolo
