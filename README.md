@@ -1,1 +1,1 @@
-El proyecto está en la carpeta de proyecto finanzas. He querido abarcar mucho y soy consciente de que falta implementar mejoras y test pero estoy contento ya que cpnsidero que está en un punto desde que el que es fácil implementar las mejoras.
+El proyecto está en la carpeta de proyecto finanzas y hay un pdf con la presentación que se llama analisis financiero. He querido abarcar mucho y soy consciente de que falta implementar mejoras y test pero estoy contento ya que cpnsidero que está en un punto desde que el que es fácil implementar las mejoras.
