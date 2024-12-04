@@ -18,7 +18,7 @@ SELECT
 
     CAST(TRIM(simbolo) AS VARCHAR(255)) AS simbolo, /* simbolo de la empresa */
     {{ dbt_utils.generate_surrogate_key(['simbolo']) }} AS id_simbolo, /* Clave única para identificar los datos de la empresa */
-    CAST(TRIM(fecha_carga) AS VARCHAR(255)) AS fecha_carga, /* fecha de la carga */
+    CONVERT_TIMEZONE('Europe/Paris', 'UTC', TRIM(fecha_carga)) AS fecha_carga, /* fecha de la carga */
     CAST(TRIM(FISCAL_DATE_ENDING) AS DATE) AS fecha_fiscal_final, /* Fecha en la que finaliza el período fiscal, convertida a la zona horaria UTC y luego a formato de fecha */
     CAST(REPORTED_CURRENCY AS VARCHAR(255)) AS moneda_reportada, /* Moneda en la que se reportan los datos financieros */
     CAST(NULLIF(GROSS_PROFIT, 'None') AS NUMERIC(20, 2)) AS utilidad_bruta, /* Beneficio bruto obtenido antes de deducir los gastos operativos */

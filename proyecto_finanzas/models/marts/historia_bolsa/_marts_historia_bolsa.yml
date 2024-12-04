@@ -331,6 +331,9 @@ models:
         description: "Acciones comunes."
       - name: acciones_comunes_en_circulacion
         description: "Acciones comunes en circulación."
+      - name: id_empresa
+        description: "Identificador de la empresa."
+
 
   - name: metricas_historificadas
     description: "Modelo que contiene las métricas historificadas financieras de las empresas."
@@ -354,8 +357,7 @@ models:
         description: "Identificador del sector."
       - name: idx_CIK
         description: "Identificador de la información de la empresa (CIK)."
-      - name: id_web
-        description: "Identificador del sitio web."
+
       - name: id_moneda
         description: "Identificador de la moneda."
       - name: fin_anyo_fiscal
@@ -445,19 +447,6 @@ models:
         tests:
           - not_null
 
-
-  - name: dim_web_hist
-    description: "Dimensión que contiene el historial de sitios web."
-    columns:
-      - name: id_web_hist
-        description: "Identificador único del historial del sitio web."
-        tests:
-          - not_null
-          - unique
-      - name: sitio_web
-        description: "URL del sitio web."
-        tests:
-          - not_null
 
 
   - name: dim_pais_hist

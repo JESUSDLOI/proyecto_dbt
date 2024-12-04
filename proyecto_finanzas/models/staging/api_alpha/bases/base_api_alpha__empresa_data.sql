@@ -66,7 +66,7 @@ WITH source AS (
     {{ dbt_utils.generate_surrogate_key(['sector']) }} AS id_sector, /* Clave única para identificar los datos del sector */
     {{ dbt_utils.generate_surrogate_key(['industria']) }} AS id_industria, /* Clave única para identificar los datos de la industria */
     {{ dbt_utils.generate_surrogate_key(['tipo_activo']) }} AS id_activo, /* Clave única para identificar los datos de la empresa */
-    {{ dbt_utils.generate_surrogate_key(['sitio_web']) }} AS id_web, /* Clave única para identificar los datos del sitio web */
+    {{ dbt_utils.generate_surrogate_key(['idx_CIK', 'nombre_empresa']) }} AS id_empresa /* Clave única para identificar los datos de la empresa */
     
 
    FROM {{ source('api_alpha', 'empresa_data') }} AS a 

@@ -2,7 +2,7 @@
 WITH source AS (
     SELECT
         *,
-        {{ trunc_ultimo_dia_trimes('fecha') }} AS fecha_trimestre
+        cast(DATE_TRUNC('month', fecha) as date) as fecha_trimestre,
         
     FROM {{ ref('stg_syp500_snowflake__sp_500__hechos_web') }} as visitas
 ), renamed AS (

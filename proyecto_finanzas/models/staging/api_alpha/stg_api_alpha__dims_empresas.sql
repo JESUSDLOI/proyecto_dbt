@@ -23,7 +23,6 @@ WITH source AS (
   id_simbolo,
   simbolo,
   nombre_empresa,
-  id_web,
   sitio_web,
   tipo_activo,
   id_activo, /* Clave única para identificar los datos de la empresa */
@@ -37,6 +36,7 @@ WITH source AS (
   id_moneda, /* Clave única para identificar los datos de la moneda */
   id_pais, /* Clave única para identificar los datos del país */
   pais,
+  id_empresa,
   id_raiz_dlt,
   fecha_insercion,
   CONVERT_TIMEZONE('UTC',dbt_updated_at) as updated_at,
@@ -59,7 +59,6 @@ SELECT
   id_simbolo,
   simbolo,
   nombre_empresa,
-  id_web,
   sitio_web,
   tipo_activo,
   id_activo, /* Clave única para identificar los datos de la empresa */
@@ -72,6 +71,7 @@ SELECT
   moneda,
   id_moneda, /* Clave única para identificar los datos de la moneda */
   id_pais, /* Clave única para identificar los datos del país */
+  id_empresa,
   pais,
   id_raiz_dlt,
   fecha_insercion,

@@ -17,7 +17,7 @@ WITH source AS (
     CAST(ENGINE_VERSION AS VARCHAR(255)) AS version_del_motor, /* versión del motor */
     CAST(PIPELINE_NAME AS VARCHAR(255)) AS nombre_del_pipeline, /* nombre del pipeline */
     CAST(STATE AS VARCHAR(167778)) AS estado, /* estado del pipeline */
-    CONVERT_TIMEZONE('UTC', CAST(CREATED_AT AS TIMESTAMP)) AS fecha_de_creacion, /* fecha de creación */
+    CONVERT_TIMEZONE('UTC', CREATED_AT) AS fecha_de_creacion, /* fecha de creación */
     CAST(VERSION_HASH AS VARCHAR(167778)) AS hash_de_la_version, /* hash de la versión */
     CAST(_DLT_LOAD_ID AS VARCHAR(167778)) AS id_carga_dlt, /* ID de carga DLT */
     CAST(_DLT_ID AS VARCHAR(255)) AS id_dlt /* ID DLT */

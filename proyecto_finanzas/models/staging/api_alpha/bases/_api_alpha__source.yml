@@ -3,7 +3,7 @@ version: 2
 
 sources:
   - name: api_alpha # Datos de la API Alphavantage
-    schema: DATOS_FINANZAS4 # schema de la base de datos
+    schema: DATOS_FINANZAS1 # schema de la base de datos
     database: "DATOS_BRONZE_FINANZAS" # base de datos
 
     quoting:

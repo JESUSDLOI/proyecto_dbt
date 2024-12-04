@@ -9,10 +9,10 @@ SELECT
   id_simbolo,
   id_activo,
   id_bolsa,
+  id_pais,
   id_industria,
   id_sector,
   idx_CIK, /*id de la informacion de la empresa*/
-  id_web,
   id_moneda,
   fin_anyo_fiscal,
   ultimo_trimestre,
@@ -51,6 +51,7 @@ SELECT
   fecha_ex_divid,
   id_carga_dlt,
   id_raiz_dlt,
+  id_empresa,
   CONVERT_TIMEZONE('UTC', dbt_valid_from) as valid_from,
   CONVERT_TIMEZONE('UTC', dbt_valid_to) AS valid_to
 
@@ -58,9 +59,9 @@ FROM source
 
 ), deduplicate_cte as (
 {{ dbt_utils.deduplicate(
-    relation='source',
+    relation='renamed',
     partition_by='id_simbolo, id_carga_dlt',
-    order_by='dbt_valid_from desc',
+    order_by='valid_from desc',
    )
 }}
 

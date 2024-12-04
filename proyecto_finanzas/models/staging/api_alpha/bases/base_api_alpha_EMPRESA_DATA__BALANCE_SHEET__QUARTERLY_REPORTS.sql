@@ -18,7 +18,7 @@ WITH source AS (
 
     CAST(TRIM(simbolo) AS VARCHAR(255)) AS simbolo, /* simbolo de la empresa */
     {{ dbt_utils.generate_surrogate_key(['simbolo']) }} AS id_simbolo, /* Clave única para identificar los datos de la empresa */
-    CAST(TRIM(fecha_carga) AS VARCHAR(255)) AS fecha_carga, /* fecha de la carga */
+    CONVERT_TIMEZONE('Europe/Paris', 'UTC', TRIM(fecha_carga)) AS fecha_carga, /* fecha de la carga */
     CAST(TRIM(FISCAL_DATE_ENDING) AS DATE) AS fecha_fiscal_final, /* Fecha de finalización del período fiscal */
     CAST(TRIM(REPORTED_CURRENCY) AS VARCHAR(255)) AS moneda, /* Moneda reportada */
     CAST(NULLIF(TRIM(TOTAL_ASSETS), 'None') AS numeric(20, 2)) AS total_activos, /* Total de activos */
