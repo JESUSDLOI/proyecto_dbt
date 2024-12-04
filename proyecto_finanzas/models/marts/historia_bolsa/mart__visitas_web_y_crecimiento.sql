@@ -48,7 +48,7 @@ SELECT
     / NULLIF(LAG(ingresos_totales) OVER (PARTITION BY simbolo ORDER BY fecha_fiscal_final), 0) * 100) AS crecimiento_ingresos
 
 FROM source
-where fecha_trimestre is not null
+
 
 ORDER BY simbolo, fecha_fiscal_final
 )

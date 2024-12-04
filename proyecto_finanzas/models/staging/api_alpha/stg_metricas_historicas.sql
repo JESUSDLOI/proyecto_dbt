@@ -12,7 +12,7 @@ WITH source AS (
   SELECT
     a.id_simbolo,
     a.fecha_carga,
-    a.fecha_fiscal_final,
+    cast(DATE_TRUNC('month',a.fecha_fiscal_final) as date) as fecha_fiscal_final,
     a.id_metrica,
     utilidad_bruta,
     ingresos_totales,
