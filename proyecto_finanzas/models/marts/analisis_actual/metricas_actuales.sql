@@ -9,6 +9,7 @@ SELECT
   id_simbolo,
   id_activo,
   id_bolsa,
+  id_pais,
   id_industria,
   id_sector,
   idx_CIK, /*id de la informacion de la empresa*/
@@ -58,9 +59,9 @@ FROM source
 
 ), deduplicate_cte as (
 {{ dbt_utils.deduplicate(
-    relation='source',
+    relation='renamed',
     partition_by='id_simbolo, id_carga_dlt',
-    order_by='dbt_valid_from desc',
+    order_by='valid_from desc',
    )
 }}
 
