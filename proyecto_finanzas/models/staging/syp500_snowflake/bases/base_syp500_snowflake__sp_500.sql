@@ -12,7 +12,7 @@ WITH source AS (
     {{ dbt_utils.generate_surrogate_key(['pais']) }} as id_pais_hist,
     CAST(TRIM(domain) AS VARCHAR(255)) AS sitio_web, /* Dominio correspondiente a las métricas */
     {{ dbt_utils.generate_surrogate_key(['sitio_web']) }} as id_web_hist,
-    CAST(CONVERT_TIMEZONE('UTC', date) AS DATE) AS fecha, /* Fecha correspondiente al dato en UTC granularidad dia*/
+    CONVERT_TIMEZONE('UTC', date) AS fecha, /* Fecha correspondiente al dato en UTC granularidad dia*/
     CAST(NULLIF(trim(desktop_avg_visit_duration), 'None') AS numeric(10, 2)) AS dura_prom_visi_escri, /* Duración promedio de visita en escritorio (en segundos) */
     CAST(NULLIF(trim(desktop_bounce_rate), 'None') AS numeric(5, 2)) AS tasa_rebote_escri, /* Tasa de rebote en escritorio */
     CAST(NULLIF(trim(desktop_pages_per_visit), 'None') AS numeric(10, 2)) AS pag_visi_escri, /* Páginas por visita promedio en escritorio */
